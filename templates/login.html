@@ -1,0 +1,506 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="gr__demos_creative-tim_com">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76"
+          href="https://demos.creative-tim.com/light-bootstrap-dashboard-pro/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png"
+          href="https://demos.creative-tim.com/light-bootstrap-dashboard-pro/assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>跨境电子商务平台</title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <!-- CSS Files -->
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/css/light-bootstrap-dashboard-login.css" %}" rel="stylesheet">
+    <script src="{% static "assets/css/demo.css" %}"></script>
+
+<body data-gr-c-s-loaded="true">
+<div class="wrapper wrapper-full-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
+        <div class="container">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand" href="/index/">跨境电子商务教学平台</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                </button>
+            </div>
+
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="full-page  section-image" data-color="black"
+         data-image="{% static "assets/img/full-screen-image-2.jpg" %}">
+        <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+        <div class="content">
+            <div class="container">
+                <div class="col-md-4 col-sm-6 ml-auto mr-auto">
+                    <form class="form" method="post" action="/login/">
+                        {% csrf_token %}
+                        <div class="card card-login">
+                            <div class="card-header ">
+                                <h3 class="header text-center">登录</h3>
+                            </div>
+                            <div class="card-body ">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        {{ login_form.username.label_tag }}
+                                        {{ login_form.username }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ login_form.password.label_tag }}
+                                        {{ login_form.password }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>验证码:</label>
+                                        <a href="#" class="captcha">
+                                            <img src="{{ cap.image_url }}" alt="点击切换" id="id_captcha">
+                                        </a>
+                                        <input type="text" name="captcha" placeholder="验证码" class="form-control"> <br>
+                                        <input value="{{ cap.hashkey }}" name="hashkey" type="hidden"
+                                               id="id_captcha_0">
+                                    </div>
+{#                                    <div class="form-group">#}
+{#                                        {{ login_form.captcha.label_tag }}#}
+{#                                        {{ login_form.captcha }}#}
+{#                                    </div>#}
+                                    {% if login_form.captcha.errors %}
+                                        <div id="info" style="display: none">{{ login_form.captcha.errors }}</div>
+                                    {% elif error %}
+                                        <div id="info" style="display: none">{{ error }}</div>
+                                    {% endif %}
+                                    {#                                        <div class="form-group">#}
+                                    {#                                            <div class="form-check">#}
+                                    {#                                                <label class="form-check-label">#}
+                                    {#                                                    <input class="form-check-input" type="checkbox" value="" checked="">#}
+                                    {#                                                    <span class="form-check-sign"></span>#}
+                                    {#                                                    Subscribe to newsletter#}
+                                    {#                                                </label>#}
+                                    {#                                            </div>#}
+                                    {#                                        </div>#}
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="submit" class="btn btn-warning btn-wd">登录</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="full-page-background"
+             style="background-image: url({% static "assets/img/full-screen-image-2.jpg" %}) "></div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <nav>
+                <p class="copyright text-center">
+                    ©
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    2019
+                    <a href="https://www.creative-tim.com/">Creative Tim</a>, made with love for a better web
+                </p>
+            </nav>
+        </div>
+    </footer>
+</div>
+<!--
+
+
+
+
+
+
+<div class="fixed-plugin">
+<div class="dropdown show-dropdown">
+    <a href="#" data-toggle="dropdown">
+        <i class="fa fa-cog fa-2x"> </i>
+    </a>
+
+    <ul class="dropdown-menu">
+        <li class="header-title"> Sidebar Style</li>
+        <li class="adjustments-line">
+            <a href="javascript:void(0)" class="switch-trigger">
+                <p>Background Image</p>
+                <label class="switch-image">
+                    <input type="checkbox" data-toggle="switch" checked="" data-on-color="info" data-off-color="info"><span class="toggle"></span>
+                </label>
+                <div class="clearfix"></div>
+            </a>
+        </li>
+        <li class="adjustments-line">
+            <a href="javascript:void(0)" class="switch-trigger">
+                <p>Sidebar Mini</p>
+                <label class="switch-mini">
+                    <input type="checkbox" data-toggle="switch" data-on-color="info" data-off-color="info">
+                    <span class="toggle"></span>
+                </label>
+                <div class="clearfix"></div>
+            </a>
+        </li>
+        <li class="adjustments-line">
+            <a href="javascript:void(0)" class="switch-trigger">
+                <p>Fixed Navbar</p>
+                <label class="switch-nav">
+                    <input type="checkbox" data-toggle="switch" data-on-color="info" data-off-color="info">
+                    <span class="toggle"></span>
+                </label>
+                <div class="clearfix"></div>
+            </a>
+        </li>
+        <li class="adjustments-line">
+            <a href="javascript:void(0)" class="switch-trigger background-color">
+                <p>Filters</p>
+                <div class="pull-right">
+                    <span class="badge filter badge-black" data-color="black"></span>
+                    <span class="badge filter badge-azure" data-color="azure"></span>
+                    <span class="badge filter badge-green" data-color="green"></span>
+                    <span class="badge filter badge-orange active" data-color="orange"></span>
+                    <span class="badge filter badge-red" data-color="red"></span>
+                    <span class="badge filter badge-purple" data-color="purple"></span>
+                </div>
+                <div class="clearfix"></div>
+            </a>
+        </li>
+        <li class="header-title">Sidebar Images</li>
+
+        <li class="active">
+            <a class="img-holder switch-trigger" href="javascript:void(0)">
+                <img src="../../assets/img/sidebar-1.jpg" alt="" />
+            </a>
+        </li>
+        <li>
+            <a class="img-holder switch-trigger" href="javascript:void(0)">
+                <img src="../../assets/img/sidebar-3.jpg" alt="" />
+            </a>
+        </li>
+        <li>
+            <a class="img-holder switch-trigger" href="javascript:void(0)">
+                <img src="../../assets/img/sidebar-4.jpg" alt="" />
+            </a>
+        </li>
+        <li>
+            <a class="img-holder switch-trigger" href="javascript:void(0)">
+                <img src="../../assets/img/sidebar-5.jpg" alt="" />
+            </a>
+        </li>
+
+        <li class="button-container">
+            <div>
+                <a href="https://www.creative-tim.com/product/light-bootstrap-dashboard" target="_blank" class="btn btn-info btn-block">Get free demo!</a>
+            </div>
+        </li>
+
+        <li class="button-container">
+            <div>
+                <a href="https://www.creative-tim.com/product/light-bootstrap-dashboard-pro" target="_blank" class="btn btn-warning btn-block">Buy now!</a>
+            </div>
+        </li>
+
+        <li class="button-container">
+            <div>
+                <a href="https://demos.creative-tim.com/light-bootstrap-dashboard-pro/documentation/tutorial-components.html" target="_blank" class="btn btn-danger btn-block">Documention</a>
+            </div>
+        </li>
+
+
+        <li class="header-title" id="sharrreTitle">Thank you for sharing!</li>
+
+        <li class="button-container">
+            <button id="twitter" class="btn btn-social btn-twitter btn-round twitter-sharrre"><i class="fa fa-twitter"></i> · 256</button>
+            <button id="facebook" class="btn btn-social btn-facebook btn-round facebook-sharrre"><i class="fa fa-facebook-square"></i> · 426</button>
+        </li>
+    </ul>
+</div>
+</div>
+-->
+
+<!--   Core JS Files   -->
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/bootstrap.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: https://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static "assets/js/plugins/bootstrap-switch.js" %}"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static "assets/js/plugins/chartist.min.js" %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static "assets/js/plugins/bootstrap-notify.js" %}"></script>
+<!--  Share Plugin -->
+<script src="{% static "assets/js/plugins/jquery.sharrre.js" %}"></script>
+<!--  jVector Map  -->
+<script src="{% static "assets/js/plugins/jquery-jvectormap.js" %}" type="text/javascript"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="{% static "assets/js/plugins/moment.min.js" %}"></script>
+<!--  DatetimePicker   -->
+<script src="{% static "assets/js/plugins/bootstrap-datetimepicker.js" %}"></script>
+<!--  Sweet Alert  -->
+<script src="{% static "assets/js/plugins/sweetalert2.min.js" %}" type="text/javascript"></script>
+<!--  Tags Input  -->
+<script src="{% static "assets/js/plugins/bootstrap-tagsinput.js" %}" type="text/javascript"></script>
+<!--  Sliders  -->
+<script src="{% static "assets/js/plugins/nouislider.min.js" %}" type="text/javascript"></script>
+<!--  Bootstrap Select  -->
+<script src="{% static "assets/js/plugins/bootstrap-selectpicker.js" %}" type="text/javascript"></script>
+<!--  jQueryValidate  -->
+<script src="{% static "assets/js/plugins/jquery.validate.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+<script src="{% static "assets/js/plugins/jquery.bootstrap-wizard.js" %}"></script>
+<!--  Bootstrap Table Plugin -->
+<script src="{% static "assets/js/plugins/bootstrap-table.js" %}"></script>
+<!--  DataTable Plugin -->
+<script src="{% static "assets/js/plugins/jquery.dataTables.min.js" %}"></script>
+<!--  Full Calendar   -->
+<script src="{% static "assets/js/plugins/fullcalendar.min.js" %}"></script>
+<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="{% static "assets/js/light-bootstrap-dashboard.js" %}" type="text/javascript"></script>
+<!-- Light Dashboard DEMO methods, don't include it in your project! -->
+{#<script src="{% static "assets/js/demo.js" %}"></script>#}
+<script type="text/javascript">
+    function showNotification(message, from, align) {
+
+        $.notify({
+            icon: "nc-icon nc-app",
+            message: message
+        }, {
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+
+    $(document).ready(function () {
+
+        {#demo.checkFullPageBackgroundImage();#}
+        var info = $('#info').text();
+        if (info !== "") {
+            console.log(info);
+            showNotification(info);
+        }
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+        }, 700);
+        <!-- 动态刷新验证码js -->
+        $('.captcha').click(function () {
+            $.getJSON("/refresh_captcha/", function (result) {
+                $('#id_captcha').attr('src', result['image_url']);
+                $('#id_captcha_0').val(result['hashkey'])
+            });
+        });
+    });
+</script>
+<!-- Facebook Pixel Code Don't Delete -->
+<script>
+    !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window,
+        document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+    try {
+        fbq('init', '111649226022273');
+        fbq('track', "PageView");
+
+    } catch (err) {
+        console.log('Facebook Track Error:', err);
+    }
+</script>
+<noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=111649226022273&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+
+
+<div class="sweet-container">
+    <div class="sweet-overlay" tabindex="-1"></div>
+    <div class="sweet-alert" style="display: none" tabindex="-1">
+        <div class="icon error"><span class="x-mark"><span class="line left"></span><span
+                class="line right"></span></span></div>
+        <div class="icon warning"><span class="body"></span> <span class="dot"></span></div>
+        <div class="icon info"></div>
+        <div class="icon success"><span class="line tip"></span> <span class="line long"></span>
+            <div class="placeholder"></div>
+            <div class="fix"></div>
+        </div>
+        <img class="sweet-image">
+        <h2>Title</h2>
+        <div class="sweet-content">Text</div>
+        <hr class="sweet-spacer">
+        <button class="sweet-confirm">OK</button>
+        <button class="sweet-cancel">Cancel</button>
+    </div>
+</div>
+<audio controls="controls" style="display: none;"></audio>
+</body>
+<style type="text/css">#yddContainer {
+    display: block;
+    font-family: Microsoft YaHei;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: -4px;
+    left: -4px;
+    font-size: 12px;
+    border: 1px solid
+}
+
+#yddTop {
+    display: block;
+    height: 22px
+}
+
+#yddTopBorderlr {
+    display: block;
+    position: static;
+    height: 17px;
+    padding: 2px 28px;
+    line-height: 17px;
+    font-size: 12px;
+    color: #5079bb;
+    font-weight: bold;
+    border-style: none solid;
+    border-width: 1px
+}
+
+#yddTopBorderlr .ydd-sp {
+    position: absolute;
+    top: 2px;
+    height: 0;
+    overflow: hidden
+}
+
+.ydd-icon {
+    left: 5px;
+    width: 17px;
+    padding: 0px 0px 0px 0px;
+    padding-top: 17px;
+    background-position: -16px -44px
+}
+
+.ydd-close {
+    right: 5px;
+    width: 16px;
+    padding-top: 16px;
+    background-position: left -44px
+}
+
+#yddKeyTitle {
+    float: left;
+    text-decoration: none
+}
+
+#yddMiddle {
+    display: block;
+    margin-bottom: 10px
+}
+
+.ydd-tabs {
+    display: block;
+    margin: 5px 0;
+    padding: 0 5px;
+    height: 18px;
+    border-bottom: 1px solid
+}
+
+.ydd-tab {
+    display: block;
+    float: left;
+    height: 18px;
+    margin: 0 5px -1px 0;
+    padding: 0 4px;
+    line-height: 18px;
+    border: 1px solid;
+    border-bottom: none
+}
+
+.ydd-trans-container {
+    display: block;
+    line-height: 160%
+}
+
+.ydd-trans-container a {
+    text-decoration: none;
+}
+
+#yddBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background-position: left -22px
+}
+
+.ydd-padding010 {
+    padding: 0 10px
+}
+
+#yddWrapper {
+    color: #252525;
+    z-index: 10001;
+    background: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);
+}
+
+#yddContainer {
+    background: #fff;
+    border-color: #4b7598
+}
+
+#yddTopBorderlr {
+    border-color: #f0f8fc
+}
+
+#yddWrapper .ydd-sp {
+    background-image: url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)
+}
+
+#yddWrapper a, #yddWrapper a:hover, #yddWrapper a:visited {
+    color: #50799b
+}
+
+#yddWrapper .ydd-tabs {
+    color: #959595
+}
+
+.ydd-tabs, .ydd-tab {
+    background: #fff;
+    border-color: #d5e7f3
+}
+
+#yddBottom {
+    color: #363636
+}
+
+#yddWrapper {
+    min-width: 250px;
+    max-width: 400px;
+}</style>
+</html>
