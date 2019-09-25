@@ -1,0 +1,19 @@
+#
+# Author: Lasse Collin
+#
+# This file has been put into the public domain.
+# You can do whatever you want with this file.
+#
+
+prefix=/Users/caoxipeng/实验室/智融兴教/project/ecommerce/env
+exec_prefix=/Users/caoxipeng/实验室/智融兴教/project/ecommerce/env
+libdir=/Users/caoxipeng/实验室/智融兴教/project/ecommerce/env/lib
+includedir=/Users/caoxipeng/实验室/智融兴教/project/ecommerce/env/include
+
+Name: liblzma
+Description: General purpose data compression library
+URL: https://tukaani.org/xz/
+Version: 5.2.4
+Cflags: -I${includedir}
+Libs: -L${libdir} -llzma
+Libs.private: -D_THREAD_SAFE -pthread 
