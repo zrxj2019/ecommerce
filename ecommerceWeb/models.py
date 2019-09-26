@@ -1,19 +1,127 @@
 from django.db import models
 
+
+# user表控制登陆登出
+# 在mysql数据库中实现插入、修改、删除触发器确保user、teacher、student表的数据一致性
 class User(models.Model):
     roleTuple = (
         (0, "teacher"),
         (1, "student"),
     )
-    username=models.CharField(max_length=15,primary_key=True,unique=True)
-    password=models.CharField(max_length=45)
-    role=models.IntegerField(choices=roleTuple)
+    username = models.CharField(max_length=15, primary_key=True, unique=True)
+    password = models.CharField(max_length=45,default=None)
+    role = models.IntegerField(choices=roleTuple)
 
+
+# 教师实体
 class Teacher(models.Model):
-    teacherid=models.ForeignKey(User,on_delete=models.CASCADE,primary_key=True)
-    teachername=models.CharField(max_length=45)
+    teacherid = models.CharField(max_length=15, primary_key=True)
+    teachername = models.CharField(max_length=45)
+    password = models.CharField(max_length=45,default=None)
+    department = models.CharField(max_length=45,null=True)
 
 
 class Student(models.Model):
-    studentid=models.ForeignKey(User,on_delete=models.CASCADE,primary_key=True)
-    studentname=models.CharField(max_length=45)
+    studentid = models.CharField(max_length=15, primary_key=True)
+    password = models.CharField(max_length=45,default=None)
+    studentname = models.CharField(max_length=45)
+
+
+# 课程实体，包括章、节、知识点、知识点的资源路径
+class Chapter(models.Model):
+    chapterid = models.AutoField(primary_key=True)
+    content = models.TextField(null=True)
+
+
+class Section(models.Model):
+    sectionid = models.AutoField(primary_key=True)
+    content = models.TextField(null=True)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    teachers = models.ManyToManyField(Teacher, through='Statistic')
+
+
+class Topic(models.Model):
+    topicid = models.AutoField(primary_key=True)
+    content = models.TextField(null=True)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    students = models.ManyToManyField(Student, through='Progress')
+
+
+class Pathlist(models.Model):
+    pathType = (
+        (0, "ppt"),
+        (1, "jpg"),
+        (2, "url"),
+    )
+    pathlistid = models.AutoField(primary_key=True)
+    path = models.CharField(max_length=200)
+    type = models.IntegerField(choices=pathType)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+
+
+# 教师、学生、知识点构成的多对多联关系，教师可以对某学生在某知识点的内容作出评价
+class Comment(models.Model):
+    comment = models.AutoField(primary_key=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    content = models.CharField(max_length=600)
+    time = models.DateTimeField(auto_now=True)
+
+
+# 教师和章节之间存在多对多的关系，用于显示章节的统计信息
+class Statistic(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    score_avg = models.FloatField()
+    # 已学习人数
+    studentnum = models.IntegerField()
+
+    class Meta:
+        unique_together = ("teacher", "section")
+
+
+# 管理员查看每天的登陆系统的人数
+class Online(models.Model):
+    id = models.AutoField(primary_key=True)
+    date = models.DateField()
+    number = models.IntegerField()
+
+
+# 学生会收到系统通知
+class Notification(models.Model):
+    notificationid = models.AutoField(primary_key=True)
+    read = models.BooleanField(default=False)
+    content = models.CharField(max_length=600)
+    time = models.DateTimeField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+
+# 学生与知识点之间存在多对多关系
+# progree用于查看学生的学习进程
+class Progress(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    content = models.CharField(null=True, max_length=200)
+
+    class Meta:
+        unique_together = ("student", "topic")
+
+
+# 题库
+class Question(models.Model):
+    questionid = models.AutoField(primary_key=True)
+    question = models.CharField(max_length=600)
+    a = models.CharField(max_length=200)
+    b = models.CharField(max_length=200)
+    c = models.CharField(max_length=200)
+    d = models.CharField(max_length=200)
+    questionType = models.IntegerField()
+    answer = models.CharField(max_length=200)
+
+
+# 学生课程总成绩
+class TestScore(models.Model):
+    id = models.AutoField(primary_key=True)
+    score = models.IntegerField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
