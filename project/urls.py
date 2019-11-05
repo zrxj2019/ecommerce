@@ -33,6 +33,31 @@ urlpatterns = [
     path('logout/', views.logout),
     #***********学生*******************
     path('student/', views.main_student),
-    path('student/user/',views.user_info_student)
+    path('student/user/',views.user_info_student),
+    path('student/test/', views.test_student),
+    path('student/test/get_test_record/', views.get_test_record_student),
+    path('student/test/start_test/', views.start_test_student),
+    path('student/test/view_test/', views.view_test_student),
+    path('student/test/view_test/save_content/', views.save_content_student),
+    path('student/test/view_test/locate_question/', views.locate_question_student),
+    path('student/test/view_test/calculate_score/', views.calculate_score_student),
+    path('student/test/view_test/end_test/', views.end_test_student),
+    path('student/test/view_test/save_test/', views.save_test_student),
+    path('student/test/view_test/reset_duration/', views.reset_duration_student),
+    path('student/get_new_notifications/', views.get_new_notification_student),
+    # 在各种界面获取新通知
+    path('student/test/get_new_notifications/', views.get_new_notification_student),
+    path('student/notifications/get_new_notifications/', views.get_new_notification_student),
+    # 在各种界面更新通知已读
+    path('student/test/reset_notification_read/', views.reset_notification_read_student),
+    path('student/notifications/', views.check_old_notification_student),
     #***********教师*******************
+    path('teacher/', views.main_teacher),
+    path('teacher/test/', views.test_teacher),
+    path('teacher/test/get_test/', views.get_test_teacher),
+    path('teacher/test/publish_test/', views.publish_test_teacher),
+    path('teacher/test/check_test/', views.check_test_teacher),
+    path('teacher/test/end_test/', views.end_test_teacher)
+
+
 ]

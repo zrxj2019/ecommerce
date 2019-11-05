@@ -93,7 +93,7 @@ class Notification(models.Model):
     notificationid = models.AutoField(primary_key=True)
     read = models.BooleanField(default=False)
     content = models.CharField(max_length=600)
-    time = models.DateTimeField()
+    time = models.CharField(max_length=200)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
 
@@ -120,9 +120,34 @@ class Question(models.Model):
     answer = models.CharField(max_length=200)
 
 
-# 学生课程总成绩
-class TestScore(models.Model):
-    id = models.AutoField(primary_key=True)
-    score = models.IntegerField()
+#考试
+class Test(models.Model):
+    testid = models.AutoField(primary_key=True)
+    testname = models.CharField(max_length=200)
+    testtime = models.IntegerField()
+    state = models.IntegerField() #考试是否开放，0为正在开放，1为考试已结束
+    xznum = models.IntegerField()
+    dxnum = models.IntegerField()
+    pdnum = models.IntegerField()
+    testscore = models.IntegerField()
+
+# 学生考试记录
+class TestRecord(models.Model):
+    recordid = models.AutoField(primary_key=True)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    datetime = models.CharField(max_length=200,null=True)
+    duration = models.CharField(max_length=200,null=True)
+    state = models.IntegerField()
+    score = models.IntegerField(null=True)
+
+
+# 学生答题记录
+class QuestionRecord(models.Model):
+    recordid = models.AutoField(primary_key=True)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    content = models.CharField(max_length=200,null=True)
+    istrue = models.IntegerField(null=True)
 
