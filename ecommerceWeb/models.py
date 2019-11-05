@@ -125,3 +125,4 @@ class TestScore(models.Model):
     id = models.AutoField(primary_key=True)
     score = models.IntegerField()
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+
