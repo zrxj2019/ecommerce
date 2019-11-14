@@ -18,10 +18,10 @@ import datetime
 #***********************页面跳转相关***********************
 def main_teacher(request):
     loginValidator(request)
-    return render(request,'teacher/teacherMain.html')
+    return render(request, 'teacher/teacherMain.html', {'data':request.session.get('username')})
 def main_student(request):
     loginValidator(request)
-    return render(request, 'student/studentMain.html')
+    return render(request, 'student/studentMain.html', {'data':request.session.get('username')})
 def user_info_student(request):
     loginValidator(request)
     return render(request, 'student/user.html')
