@@ -18,7 +18,6 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ECharts</title>
     <!-- 引入 echarts.js -->
     <script src='{% static "assets/js/plugins/echarts.js" %}'></script>
     <script src='{% static "assets/js/plugins/macarons.js" %}'></script>
@@ -89,6 +88,7 @@
                                     <div id="progress" style="width: 100%;height:355px;"></div>
                                 </div>
                                 <div class="card-footer ">
+                                    <hr>
                                     <div class="stats">
                                         <i class="fa fa-history"></i> Updated 3 minutes ago
                                     </div>
@@ -98,18 +98,13 @@
                         <div class="col-md-8">
                             <div class="card ">
                                 <div class="card-header ">
-                                    <h4 class="card-title">Users Behavior</h4>
-                                    <p class="card-category">24 Hours performance</p>
+                                    <h4 class="card-title">学习时间统计</h4>
+                                    <p class="card-category">每章节学习统计</p>
                                 </div>
                                 <div class="card-body ">
-                                    <div id="chartHours" class="ct-chart"></div>
+                                    <div id="time_sta" style="width: 100%;height:355px;"></div>
                                 </div>
                                 <div class="card-footer ">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Open
-                                        <i class="fa fa-circle text-danger"></i> Click
-                                        <i class="fa fa-circle text-warning"></i> Click Second Time
-                                    </div>
                                     <hr>
                                     <div class="stats">
                                         <i class="fa fa-history"></i> Updated 3 minutes ago
@@ -117,22 +112,19 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card ">
                                 <div class="card-header ">
-                                    <h4 class="card-title">2017 Sales</h4>
-                                    <p class="card-category">All products including Taxes</p>
+                                    <h4 class="card-title">学习成绩统计</h4>
+                                    <p class="card-category">考试成绩统计</p>
                                 </div>
                                 <div class="card-body ">
-                                    <div id="chartActivity" class="ct-chart"></div>
+                                    <div id="grade_sta" style="width: 100%;height:355px;"></div>
                                 </div>
                                 <div class="card-footer ">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Tesla Model S
-                                        <i class="fa fa-circle text-danger"></i> BMW 5 Series
-                                    </div>
                                     <hr>
                                     <div class="stats">
                                         <i class="fa fa-check"></i> Data information certified
@@ -143,8 +135,8 @@
                         <div class="col-md-6">
                             <div class="card  card-tasks">
                                 <div class="card-header ">
-                                    <h4 class="card-title">Tasks</h4>
-                                    <p class="card-category">Backend development</p>
+                                    <h4 class="card-title">考试信息</h4>
+                                    <p class="card-category">考试完成情况</p>
                                 </div>
                                 <div class="card-body ">
                                     <div class="table-full-width">
@@ -154,19 +146,14 @@
                                                     <td>
                                                         <div class="form-check">
                                                             <label class="form-check-label">
-                                                                <input class="form-check-input" type="checkbox" value="">
+                                                                <input class="form-check-input" type="checkbox" value=""checked>
                                                                 <span class="form-check-sign"></span>
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>Sign contract for "What are conference organizers afraid of?"</td>
+                                                    <td>考试1：xxxxx的xxxxx</td>
                                                     <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
+
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -178,14 +165,8 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                                                    <td>考试2：xxxxxx</td>
                                                     <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -197,15 +178,9 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                                    </td>
+                                                    <td>考试3：不错不错不错不错</td>
                                                     <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
+
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -217,14 +192,8 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>Create 4 Invisible User Experiences you Never Knew About</td>
+                                                    <td>考试4：很好很好很好好好</td>
                                                     <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -236,14 +205,8 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>Read "Following makes Medium better"</td>
+                                                    <td>考试5：倒数第二个考试了</td>
                                                     <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -255,13 +218,8 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>Unfollow 5 enemies from twitter</td>
+                                                    <td>综合考试：综合综合综合综合</td>
                                                     <td class="td-actions text-right">
-                                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                            <i class="fa fa-times"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -280,41 +238,7 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav>
-                        <ul class="footer-menu">
-                            <li>
-                                <a href="#">
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Portfolio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-center">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                        </p>
-                    </nav>
-                </div>
-            </footer>
+
         </div>
     </div>
 
@@ -399,6 +323,128 @@
         }
     ]
 };
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('time_sta'),'macarons');
+
+    // 指定图表的配置项和数据
+    option = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#6a7985'
+            }
+        }
+    },
+    legend: {
+        data:['本人学习时长','平均学习时长']
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : ['1','2.1','2.2','2.3','2.4','3']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'本人学习时长',
+            type:'line',
+            areaStyle: {},
+            data:[30, 14, 23, 39, 28, 40, 90]
+        },
+        {
+            name:'平均学习时长',
+            type:'line',
+            areaStyle: {},
+            data:[33, 20, 19, 45, 32, 50, 88]
+        }
+    ]
+};
+
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('grade_sta'),'macarons');
+
+    // 指定图表的配置项和数据
+    option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data:['本人考试成绩','平均考试成绩']
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: ['考试1','考试2','考试3','考试4','考试5','考试6','考试7','考试8','综合考试'],
+            axisPointer: {
+                type: 'shadow'
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '分',
+            min: 60,
+            max: 100,
+            interval: 10,
+            axisLabel: {
+                formatter: '{value} 分'
+            }
+        }
+    ],
+    series: [
+        {
+            name:'本人考试成绩',
+            type:'bar',
+            data:[99, 84, 88, 95, 96, 83, 81, 98, 90]
+        },
+        {
+            name:'平均考试成绩',
+            type:'bar',
+            data:[94, 99, 81, 88, 99, 84, 85, 80, 81]
+        }
+    ]
+};
+
     myChart.setOption(option);
 </script>
 </html>
