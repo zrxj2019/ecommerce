@@ -21,10 +21,14 @@ def main_teacher(request):
     return render(request, 'teacher/teacherMain.html', {'data':request.session.get('username')})
 def main_student(request):
     loginValidator(request)
-    return render(request, 'student/studentMain.html', {'data':request.session.get('username')})
+    student = models.Student.objects.get(studentid=request.session.get('userid'))
+    TOTALTOPICS = 28
+    study_progress = len(student.studied_topics.all())
+    return render(request, 'student/studentMain.html', {'data':request.session.get('username'),
+                                                        'total':TOTALTOPICS, 'study_progress':study_progress})
 def user_info_student(request):
     loginValidator(request)
-    return render(request, 'student/user.html')
+    return render(request, 'student/user.html', {'data':request.session.get('username')})
 
 #***********************登录登出相关***********************
 #登录验证器，验证是否登录

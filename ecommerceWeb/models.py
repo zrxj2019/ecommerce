@@ -100,7 +100,7 @@ class Notification(models.Model):
 # 学生与知识点之间存在多对多关系
 # progree用于查看学生的学习进程
 class Progress(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, related_name='studied_topics', on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     content = models.CharField(null=True, max_length=200)
 
