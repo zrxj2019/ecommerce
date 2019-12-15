@@ -18,7 +18,7 @@ Including another URLconf
 """
 from django.urls import path
 # from django.conf.urls import url
-from ecommerceWeb import views
+from ecommerceweb import views
 from django.contrib import admin
 from django.urls import include
 # urlpatterns = [
@@ -45,6 +45,7 @@ urlpatterns = [
     path('student/test/view_test/save_test/', views.save_test_student),
     path('student/test/view_test/reset_duration/', views.reset_duration_student),
     path('student/get_new_notifications/', views.get_new_notification_student),
+    path('student/study/compare_pay/', views.study_compare_pay),
     # 在各种界面获取新通知
     path('student/test/get_new_notifications/', views.get_new_notification_student),
     path('student/notifications/get_new_notifications/', views.get_new_notification_student),

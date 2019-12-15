@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'ecommerceWeb',
+    'ecommerceweb',
     'captcha',
     'django.contrib.admin',
     'django.contrib.auth',
