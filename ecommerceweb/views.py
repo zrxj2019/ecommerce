@@ -170,6 +170,12 @@ def study_compare_pay(request):
     return render(request, 'student/compare_pay.html', {'data': request.session.get('username')})
 
 @csrf_exempt
+def study_pay(request):
+    studentid = request.session.get('userid')
+
+    return render(request, 'student/pay.html', {'data': request.session.get('username')})
+
+@csrf_exempt
 def start_test_student(request):
     recordId=request.POST.get('recordId')
     print(recordId)
