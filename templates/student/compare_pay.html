@@ -116,13 +116,40 @@
                                     <hr/>
                                     <section>
                                     <p>
-                                        这一块是交互
+                                        跨境电商场景中，使用传统国际贸易及传统电子商务的支付手段会有哪些问题？
+                                        <div class="col-md-6">
+                                            <div class="card " style="Background: #33CCCC;"
+                                                 onclick="document.getElementById('result1').innerHTML ='支付时间长，支付流程过于复杂，购买者不会轻易付款，供货商不会轻易发货。'"
+                                                 onmouseover="document.getElementById('compare_pay1').style.fontWeight='bold'; document.getElementById('compare_pay1').style.textDecoration='underline'"
+                                                 onmouseout="document.getElementById('compare_pay1').style.fontWeight='normal'; document.getElementById('compare_pay1').style.textDecoration='none'">
+                                                <div class="card-body" style="color: #FFFFFF">
+                                                    <div class="typography-line">
+                                                        <h3 id="compare_pay1" style="text-align:center">
+                                                            跨境电商&传统国际贸易支付手段</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a class="card "style="Background: #9988CC;" onclick="document.getElementById('result1').innerHTML ='国家间使用不同货币，买家没有卖家国家的货币，卖家也不愿意收买家国家的货币。'"
+                                               onmouseover="document.getElementById('compare_pay2').style.fontWeight='bold'; document.getElementById('compare_pay2').style.textDecoration='underline'"
+                                               onmouseout="document.getElementById('compare_pay2').style.fontWeight='normal'; document.getElementById('compare_pay2').style.textDecoration='none'">
+                                                <div class="card-body " style="color: #FFFFFF">
+                                                    <div class="typography-line">
+                                                    <h3 id="compare_pay2" style="text-align:center">
+                                                        跨境电商&传统电子商务支付手段</h3>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <br/>
+                                        <p id="result1"></p>
                                     </p>
                                     </section>
                                     <hr/>
                                     <section>
                                     <p>
-                                        这一块是题
+                                        问题：把国内电商范围扩大至跨境电商，收汇款方式需要考虑哪些问题？
                                     </p>
                                     </section>
                                 </div>
@@ -170,174 +197,5 @@
 
     });
 </script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('progress'),'macarons');
 
-    // 指定图表的配置项和数据
-    option = {
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        x: 'left',
-        data:['已完成小节','未完成小节']
-    },
-    series: [
-        {
-            name:'学习情况',
-            type:'pie',
-            radius: ['50%', '70%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            data:[
-                {value:{{ study_progress }}, name:'已完成小节'},
-                {value:{{ total }}, name:'未完成小节'}
-            ]
-        }
-    ]
-};
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('time_sta'),'macarons');
-
-    // 指定图表的配置项和数据
-    option = {
-    tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                backgroundColor: '#6a7985'
-            }
-        }
-    },
-    legend: {
-        data:['本人学习时长','平均学习时长']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap : false,
-            data : ['1','2.1','2.2','2.3','2.4','3']
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'本人学习时长',
-            type:'line',
-            areaStyle: {},
-            data:[30, 14, 23, 39, 28, 40, 90]
-        },
-        {
-            name:'平均学习时长',
-            type:'line',
-            areaStyle: {},
-            data:[33, 20, 19, 45, 32, 50, 88]
-        }
-    ]
-};
-
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('grade_sta'),'macarons');
-
-    // 指定图表的配置项和数据
-    option = {
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            crossStyle: {
-                color: '#999'
-            }
-        }
-    },
-    toolbox: {
-        feature: {
-            dataView: {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'bar']},
-            restore: {show: true},
-            saveAsImage: {show: true}
-        }
-    },
-    legend: {
-        data:['本人考试成绩','平均考试成绩']
-    },
-    xAxis: [
-        {
-            type: 'category',
-            data: ['考试1','考试2','考试3','考试4','考试5','考试6','考试7','考试8','综合考试'],
-            axisPointer: {
-                type: 'shadow'
-            }
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: '分',
-            min: 60,
-            max: 100,
-            interval: 10,
-            axisLabel: {
-                formatter: '{value} 分'
-            }
-        }
-    ],
-    series: [
-        {
-            name:'本人考试成绩',
-            type:'bar',
-            data:[99, 84, 88, 95, 96, 83, 81, 98, 90]
-        },
-        {
-            name:'平均考试成绩',
-            type:'bar',
-            data:[94, 99, 81, 88, 99, 84, 85, 80, 81]
-        }
-    ]
-};
-
-    myChart.setOption(option);
-</script>
 </html>
