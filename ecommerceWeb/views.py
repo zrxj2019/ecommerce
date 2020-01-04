@@ -277,6 +277,7 @@ def locate_question_student(request):
 def calculate_score_student(request):
     testRecordId=request.POST.get('testRecordId')
     testRecord=models.TestRecord.objects.get(recordid=testRecordId)
+    test = models.Test.objects.get(testid=testRecord.test_id)
     # 计算得分
     isTrueList=[i[0] for i in models.QuestionRecord.objects.filter(test_id=testRecord.test,student_id=testRecord.student)
         .values_list('istrue')]
@@ -286,7 +287,9 @@ def calculate_score_student(request):
         if isTrue== 1:
             score+=10
     print(score)
-    models.TestRecord.objects.filter(recordid=testRecordId).update(state=2,score=score)
+    testScore=test.testscore
+    finalScore=round(score*100/testScore)
+    models.TestRecord.objects.filter(recordid=testRecordId).update(state=2,score=finalScore)
 
     return HttpResponse(json.dumps({
         'msg': '考试提交成功，得分为：'+str(score)
