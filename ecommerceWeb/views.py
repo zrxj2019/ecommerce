@@ -13,6 +13,7 @@ from . import forms
 import json
 import random
 import datetime
+from .student import studentController
 
 
 #***********************页面跳转相关***********************
@@ -26,6 +27,10 @@ def user_info_student(request):
     loginValidator(request)
     return render(request, 'student/user.html')
 
+def student_online_learning(request):
+    loginValidator(request)
+    chapters=studentController.getChapters()
+    return render(request,'student/onlinelearning.html',{'chapters':chapters})
 #***********************登录登出相关***********************
 #登录验证器，验证是否登录
 def loginValidator(request):
@@ -411,6 +416,8 @@ def end_test_teacher(request):
         'tests':tests
     }))
 ############################教师考试##################################
+
+############################在线学习##################################
 
 
 

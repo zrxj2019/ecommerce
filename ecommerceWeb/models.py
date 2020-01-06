@@ -30,11 +30,13 @@ class Student(models.Model):
 # 课程实体，包括章、节、知识点、知识点的资源路径
 class Chapter(models.Model):
     chapterid = models.AutoField(primary_key=True)
+    chaptername=models.CharField(max_length=60,default=None)
     content = models.TextField(null=True)
 
 
 class Section(models.Model):
     sectionid = models.AutoField(primary_key=True)
+    sectionname=models.CharField(max_length=60,default=None)
     content = models.TextField(null=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     teachers = models.ManyToManyField(Teacher, through='Statistic')
@@ -42,6 +44,7 @@ class Section(models.Model):
 
 class Topic(models.Model):
     topicid = models.AutoField(primary_key=True)
+    topicname=models.CharField(max_length=60,default=None)
     content = models.TextField(null=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student, through='Progress')

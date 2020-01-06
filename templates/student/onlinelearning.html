@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>跨境电子商务教学平台-学生-在线学习</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <!-- CSS Files -->
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet"/>
+    <link href="{% static "assets/css/light-bootstrap-dashboard.css" %} " rel="stylesheet"/>
+    <link href="{% static "assets/css/owl.carousel.min.css" %} " rel="stylesheet"/>
+    <link href="{% static "assets/css/style.css" %} " rel="stylesheet"/>
+    <link href="{% static "assets/css/themify-icons.css" %} " rel="stylesheet"/>
+</head>
+
+<body>
+<div class="wrapper">
+    {% include "student/sidebar_student.html" %}
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#pablo"> Dashboard </a>
+                <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                    <span class="navbar-toggler-bar burger-lines"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="dropdown">
+                                <i class="nc-icon nc-palette"></i>
+                                <span class="d-lg-none">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <i class="nc-icon nc-planet"></i>
+                                <span class="notification" id="notificationNum" style="display: none"></span>
+                                <span class="d-lg-none">通知</span>
+                            </a>
+                            <ul class="dropdown-menu" id="notification_dropdown">
+                                <a class="dropdown-item" href="/student/notifications/">历史通知</a>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nc-icon nc-zoom-split"></i>
+                                <span class="d-lg-block">&nbsp;Search</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pablo">
+                                <span class="no-icon">Account</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="no-icon">Dropdown</span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">
+                                <span class="no-icon">登出</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="course-curriculum">
+                            <ul class="nav nav-tabs">
+                                <li><a class="active" data-toggle="tab" href="#curriculum">课程内容</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="curriculum" class="tab-pane active">
+                                    <nav aria-label="breadcrumb" id="courseNav">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item form-inline" aria-current="page"><a
+                                                    href="javascript:void(0);"
+                                                    onclick="showChapterList()">章节列表</a>
+                                            </li>
+                                            <div class="dropdown form-inline">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                   id="dropdownChapterLink" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false">
+                                                    下拉菜单
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownChapterLink">
+                                                    {% for c in chapters %}
+                                                        <a class="dropdown-item" href="#">第 {{ forloop.counter }}
+                                                            章 {{ c.chaptername }}</a>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="dropdown form-inline">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                   id="dropdownSectionLink" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false">
+                                                    下拉菜单
+                                                </a>
+
+                                                <div id="dropdownSectionList" class="dropdown-menu"
+                                                     aria-labelledby="dropdownSectionLink">
+
+                                                </div>
+
+                                            </div>
+                                        </ol>
+                                    </nav>
+                                    <iframe id="sectionDetail_pdf" src="" width="100%" height="500px">
+
+                                        This browser does not support PDFs. Please download the PDF to view it: <a
+                                            href="">Download PDF</a>
+
+                                    </iframe>
+                                    <div class="accordion" id="chapterList">
+                                        {% for c in chapters %}
+                                            {% if forloop.counter == 1 %}
+                                                <div class="accordion-item active">
+                                                    <h5 class="" data-toggle="collapse"
+                                                        data-target="#acpan{{ c.chapterid }}"
+                                                        aria-expanded="true">
+                                                        第 {{ forloop.counter }} 章 {{ c.chaptername }}
+                                                        <span>共{{ c.section_set.count }}节</span>
+                                                    </h5>
+                                                    <div id="acpan{{ c.chapterid }}" class="collapse show"
+                                                         data-parent="#accordion">
+                                                        <div class="acr-body">
+                                                            <ul>
+                                                                {% for s in c.section_set.all %}
+                                                                    <li>
+                                                                        <a href="javascript:void(0)"
+                                                                           onclick="javascript:querySectionDetail('{{ s.sectionid }}','{{ forloop.parentloop.counter }}.{{ forloop.counter }} {{ s.sectionname }}','{{ forloop.counter }}','第 {{ forloop.counter }} 章 {{ c.chaptername }}')"><i
+                                                                                class="ti-control-play"
+                                                                                id="a{{ s.sectionid }}"></i>
+                                                                            {{ forloop.parentloop.counter }}.{{ forloop.counter }} {{ s.sectionname }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div class="accordion-item">
+                                                    <h5 class="" data-toggle="collapse"
+                                                        data-target="#acpan{{ c.chapterid }}"
+                                                        aria-expanded="false">
+                                                        第 {{ forloop.counter }} 章 {{ c.chaptername }}
+                                                        <span>共{{ c.section_set.count }}节</span>
+                                                    </h5>
+                                                    <div id="acpan{{ c.chapterid }}" class="collapse"
+                                                         data-parent="#accordion">
+                                                        <div class="acr-body">
+                                                            <ul>
+                                                                {% for s in c.section_set.all %}
+                                                                    <li>
+                                                                        <a href="javascript:void(0)"
+                                                                           onclick="javascript:querySectionDetail('{{ s.sectionid }}','{{ forloop.parentloop.counter }}.{{ forloop.counter }} {{ s.sectionname }}','{{ forloop.counter }}','第 {{ forloop.counter }} 章 {{ c.chaptername }}')"><i
+                                                                                class="ti-control-play"
+                                                                                id="a{{ s.sectionid }}"></i>
+                                                                            {{ forloop.parentloop.counter }}.{{ forloop.counter }} {{ s.sectionname }}
+                                                                        </a>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<!--   Core JS Files   -->
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/jquery.media.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/bootstrap.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static "assets/js/plugins/bootstrap-switch.js" %}"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static "assets/js/plugins/chartist.min.js" %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static "assets/js/plugins/bootstrap-notify.js" %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static "assets/js/light-bootstrap-dashboard.js" %} " type="text/javascript"></script>
+<script src="{% static "assets/js/demo.js" %}"></script>
+<script src="{% static "DataTables/datatables.min.js" %}"></script>
+
+<script type="text/javascript">
+    function showNotification(message, from, align) {
+
+        $.notify({
+            icon: "nc-icon nc-app",
+            message: message
+        }, {
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+
+    //获取cookie代码
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function querySectionDetail(sectionid, sectionname, chapternum, chaptername) {
+        $('#dropdownChapterLink').text(chaptername);
+        $('#dropdownSectionLink').text(sectionname);
+        $('#dropdownSectionList').empty();
+        {% for c in chapters %}
+            if ({{ forloop.counter }}== chapternum)
+            {
+                {% for s in c.section_set.all %}
+                    $('#dropdownSectionList').append(' <a class="dropdown-item" href="#">{{ forloop.parentloop.counter }}.{{ forloop.counter }}  {{ s.sectionname }}</a>')
+                {% endfor %}
+            }
+        {% endfor %}
+        $('#courseNav').show();
+        $('#chapterList').hide();
+        //ajax查询该section的详情
+        //查询所有topic
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        });
+
+        var url_path=window.location.protocol+"//"+window.location.host;
+        $.ajax({
+            type: 'post',
+            url: 'get_section_details',
+            data: {'sectionid': sectionid},
+            success: function (result) {
+                var resultJson = JSON.parse(result);
+                console.info(resultJson);
+                if (resultJson.status === 100) {
+                    $('#sectionDetail_pdf').show();
+                    $('#sectionDetail_pdf').attr('src',url_path+'/'+resultJson.result.topics[0].pathlist[0].path);
+                } else {
+                    showNotification(result.result.notification);
+                }
+            }
+
+        });
+    }
+
+    function showChapterList() {
+        $('#chapterList').show();
+        $('#courseNav').hide();
+        $('#sectionDetail_pdf').hide();
+    }
+
+    $(document).ready(function () {
+
+        //面包屑导航栏为默认关闭，当点击某一个section时显示，
+        $('#courseNav').hide();
+        $('#sectionDetail_pdf').hide();
+    });
+</script>
+</html>
