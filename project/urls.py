@@ -47,6 +47,8 @@ urlpatterns = [
     path('student/test/view_test/save_test/', views.save_test_student),
     path('student/test/view_test/reset_duration/', views.reset_duration_student),
     path('student/get_new_notifications/', views.get_new_notification_student),
+    path('student/study/compare_pay/', views.study_compare_pay),
+    path('student/study/pay/', views.study_pay),
     # 在各种界面获取新通知
     path('student/test/get_new_notifications/', views.get_new_notification_student),
     path('student/notifications/get_new_notifications/', views.get_new_notification_student),
@@ -64,5 +66,6 @@ urlpatterns = [
     path('teacher/test/publish_test/', views.publish_test_teacher),
     path('teacher/test/check_test/', views.check_test_teacher),
     path('teacher/test/end_test/', views.end_test_teacher)
+
 
 ]

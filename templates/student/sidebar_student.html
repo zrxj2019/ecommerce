@@ -1,4 +1,5 @@
 {% load static %}
+<!DOCTYPE html>
 <div class="sidebar" data-image="{% static "assets/img/sidebar-4.jpg" %}" data-color="azure">
     <!--
 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -12,14 +13,14 @@ Tip 2: you can also add an image using data-image tag
             </a>
         </div>
         <ul class="nav">
-            <li class="nav-item active">
+            <li>
                 <a class="nav-link" href="/student">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>主页</p>
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="user/">
+                <a class="nav-link" href="/student/user/">
                     <i class="nc-icon nc-circle-09"></i>
                     <p>个人信息</p>
                 </a>
@@ -37,7 +38,7 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="experiment/">
+                <a class="nav-link" href="/student/experiment/">
                     <i class="nc-icon nc-atom"></i>
                     <p>实验</p>
                 </a>
