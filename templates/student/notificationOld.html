@@ -34,47 +34,7 @@
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="{% static "assets/img/sidebar-4.jpg" %}" data-color="azure">
--->         <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="http://www.bupt.edu.cn" class="simple-text">
-                    跨境电子商务教学平台
-                    </a>
-                </div>
-                <ul class="nav">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/student">
-                            <i class="nc-icon nc-chart-pie-35"></i>
-                            <p>主页</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="user/">
-                            <i class="nc-icon nc-circle-09"></i>
-                            <p>个人信息</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="onlinelearn/">
-                            <i class="nc-icon nc-notes"></i>
-                            <p>在线学习</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/student/test/">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>考试</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="experiment/">
-                            <i class="nc-icon nc-atom"></i>
-                            <p>实验</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% include "student/sidebar_student.html" %}
         <div class="main-panel">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">

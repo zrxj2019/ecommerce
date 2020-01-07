@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8"/>
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "assets/img/apple-icon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>跨境电子商务教学平台-学生-在线学习</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
@@ -25,71 +25,7 @@
 <div class="wrapper">
     {% include "student/sidebar_student.html" %}
     <div class="main-panel">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#pablo"> Dashboard </a>
-                <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                    <span class="navbar-toggler-bar burger-lines"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="dropdown">
-                                <i class="nc-icon nc-palette"></i>
-                                <span class="d-lg-none">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="dropdown nav-item">
-                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <i class="nc-icon nc-planet"></i>
-                                <span class="notification" id="notificationNum" style="display: none"></span>
-                                <span class="d-lg-none">通知</span>
-                            </a>
-                            <ul class="dropdown-menu" id="notification_dropdown">
-                                <a class="dropdown-item" href="/student/notifications/">历史通知</a>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nc-icon nc-zoom-split"></i>
-                                <span class="d-lg-block">&nbsp;Search</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#pablo">
-                                <span class="no-icon">Account</span>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="no-icon">Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">
-                                <span class="no-icon">登出</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- End Navbar -->
+        {% include "student/navbar.html" %}
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -135,12 +71,34 @@
                                             </div>
                                         </ol>
                                     </nav>
-                                    <iframe id="sectionDetail_pdf" src="" width="100%" height="500px">
+                                    <div id="sectionDetail_div" class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h2 class="card-title" style="text-align: center"></h2>
+                                                    <p class="card-category" style="text-align: center"></p>
+                                                </div>
 
-                                        This browser does not support PDFs. Please download the PDF to view it: <a
-                                            href="">Download PDF</a>
+                                                <div class="card-body">
+                                                    <div class="iframe-container">
+                                                        <iframe id="sectionDetail_pdf" src="" frameborder="0"
+                                                                height="700px">
+                                                            This browser does not support PDFs. Please download the PDF
+                                                            to
+                                                            view it: <a
+                                                                href="">Download PDF</a>
+                                                        </iframe>
+                                                    </div>
+                                                    <section>
+                                                        <ul>
 
-                                    </iframe>
+                                                        </ul>
+                                                    </section>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="accordion" id="chapterList">
                                         {% for c in chapters %}
                                             {% if forloop.counter == 1 %}
@@ -257,7 +215,7 @@
         return cookieValue;
     }
 
-    function querySectionDetail(sectionid, sectionname, chapternum, chaptername) {
+    function querySectionDetail(sectionid, sectionname, chapternum, chaptername, content) {
         $('#dropdownChapterLink').text(chaptername);
         $('#dropdownSectionLink').text(sectionname);
         $('#dropdownSectionList').empty();
@@ -278,8 +236,7 @@
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
             }
         });
-
-        var url_path=window.location.protocol+"//"+window.location.host;
+        var url_path = window.location.protocol + "//" + window.location.host;
         $.ajax({
             type: 'post',
             url: 'get_section_details',
@@ -288,8 +245,53 @@
                 var resultJson = JSON.parse(result);
                 console.info(resultJson);
                 if (resultJson.status === 100) {
-                    $('#sectionDetail_pdf').show();
-                    $('#sectionDetail_pdf').attr('src',url_path+'/'+resultJson.result.topics[0].pathlist[0].path);
+                    $('#sectionDetail_div').show();
+                    {#$('#sectionDetail_pdf').hide();#}
+                    $('#sectionDetail_div .card-body section ul').html('');
+                    $('#sectionDetail_div .card-title').text(resultJson.result.section.sectionname);
+                    $('#sectionDetail_div .card-category').text(resultJson.result.section.content);
+                    if (resultJson.result.topics != null) {
+                        var htmltext = '';
+                        //topic内容
+                        for (var i = 0; i < resultJson.result.topics.length; i++) {
+                            if (resultJson.result.topics[i].topic.topictype == '0') {
+                                var topicname = resultJson.result.topics[i].topic.topicname;
+                                htmltext += "<li>" + topicname + "\n" +
+                                    "                                                                <ul>\n";
+                                var topictext = resultJson.result.topics[i].topic.content;
+                                var topiclist = topictext.split('_');
+                                for (var j = 0; j < topiclist.length; j++) {
+                                    //按照\n分割
+                                    htmltext += "<li>\n" +
+                                        "                                                                        <dl>\n";
+                                    var subtopiclist = topiclist[j].split('\\n');
+                                    for (var k = 0; k < subtopiclist.length; k++) {
+                                        if (subtopiclist[k].includes('*')) {
+                                            htmltext += " <dt>" + subtopiclist[k].replace(/\*/g, '') + "</dt>\n";
+                                        } else {
+                                            htmltext += " <dd>" + subtopiclist[k] + "</dd>\n";
+                                        }
+                                    }
+                                    htmltext += "                                                                        </dl>\n" +
+                                        "                                                                    </li>\n";
+                                }
+                                //判断是否有图片内容
+                                if (resultJson.result.topics[i].pathlist != null) {
+                                    for (var j = 0; j < resultJson.result.topics[i].pathlist.length; j++) {
+                                        htmltext += "<img src=" + url_path + '/' + resultJson.result.topics[i].pathlist[j].path + "/>\n"
+                                    }
+                                }
+                                htmltext += "                                                                </ul>\n" +
+                                    "                                                            </li>";
+                            } else if (resultJson.result.topics[i].topic.topictype == '1') {
+                                //课件
+
+                                $('#sectionDetail_pdf').attr('src', url_path + '/' + resultJson.result.topics[i].pathlist[0].path);
+                                $('#sectionDetail_pdf').show();
+                            }
+                        }
+                        $('#sectionDetail_div .card-body section ul').html(htmltext);
+                    }
                 } else {
                     showNotification(result.result.notification);
                 }
@@ -301,14 +303,14 @@
     function showChapterList() {
         $('#chapterList').show();
         $('#courseNav').hide();
-        $('#sectionDetail_pdf').hide();
+        $('#sectionDetail_div').hide();
     }
 
     $(document).ready(function () {
 
         //面包屑导航栏为默认关闭，当点击某一个section时显示，
         $('#courseNav').hide();
-        $('#sectionDetail_pdf').hide();
+        $('#sectionDetail_div').hide();
     });
 </script>
 </html>

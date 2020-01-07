@@ -18,35 +18,57 @@ from .student import studentController
 
 #***********************页面跳转相关***********************
 def main_teacher(request):
-    loginValidator(request)
-    return render(request, 'teacher/teacherMain.html', {'data':request.session.get('username')})
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
+    return render(request, 'teacher/teacherMain.html', {'username':request.session.get('username')})
 def main_student(request):
-    loginValidator(request)
+    validate=loginValidator(request)
+    if validate!=None:
+        return validate
     student = models.Student.objects.get(studentid=request.session.get('userid'))
     TOTALTOPICS = 28
     study_progress = len(student.studied_topics.all())
-    return render(request, 'student/studentMain.html', {'data':request.session.get('username'),
+    return render(request, 'student/studentMain.html', {'username':request.session.get('username'),
                                                         'total':TOTALTOPICS, 'study_progress':study_progress})
 def user_info_student(request):
-    loginValidator(request)
-    return render(request, 'student/user.html', {'data':request.session.get('username')})
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
+    return render(request, 'student/user.html', {'username':request.session.get('username')})
 
 def student_online_learning(request):
-    loginValidator(request)
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
     chapters=studentController.getChapters()
-    return render(request,'student/onlinelearning.html',{'chapters':chapters})
+    return render(request,'student/onlinelearning.html',{'username':request.session.get('username'),'chapters':chapters},)
+
+def student_experiment(request):
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
+    return render(request, 'student/experiment.html',{'username':request.session.get('username')})
 #***********************登录登出相关***********************
 #登录验证器，验证是否登录
 def loginValidator(request):
-    if not request.session.get('is_login', None):
+    print(request.session.get('is_login', None))
+    print(request.session.get('userid'))
+    if not request.session.get('is_login', None) and (request.session.get('userid')==None):
         return redirect('/login/')
     else:
         #登录了转发到对应主页面
         role=request.session.get('role')
         if role==0:
-            return redirect('/teacher/')
+            if 'teacher' not in request.get_full_path_info():
+                return redirect('/teacher/')
+            else:
+                return None
         elif role==1:
-            return redirect('/student/')
+            if 'student' not in request.get_full_path_info():
+                return redirect('/student/')
+            else:
+                return None
 
 def login(request):
     if request.session.get('is_login', None):  # 不允许重复登录
@@ -134,7 +156,7 @@ def jarge_captcha(captchaStr, captchaHashkey):
 #跳转界面
 def test_student(request):
     loginValidator(request)
-    return render(request,'student/studentTest.html',locals())
+    return render(request,'student/studentTest.html',{'username':request.session.get('username')})
 #获取所有考试信息
 @csrf_exempt
 def get_test_record_student(request):

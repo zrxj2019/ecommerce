@@ -18,8 +18,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "assets/img/apple-icon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>跨境电子商务教学平台-学生-考试</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -34,115 +34,9 @@
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="{% static "assets/img/sidebar-4.jpg" %}" data-color="azure">
-    <!--
-Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-Tip 2: you can also add an image using data-image tag
--->         <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="http://www.bupt.edu.cn" class="simple-text">
-                    跨境电子商务教学平台
-                    </a>
-                </div>
-                <ul class="nav">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/student">
-                            <i class="nc-icon nc-chart-pie-35"></i>
-                            <p>主页</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="user/">
-                            <i class="nc-icon nc-circle-09"></i>
-                            <p>个人信息</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="onlinelearn/">
-                            <i class="nc-icon nc-notes"></i>
-                            <p>在线学习</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" href="/student/test/">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>考试</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="experiment/">
-                            <i class="nc-icon nc-atom"></i>
-                            <p>实验</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% include "student/sidebar_student.html" %}
         <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo"> Dashboard </a>
-                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-bar burger-lines"></span>
-                        <span class="navbar-toggler-bar burger-lines"></span>
-                        <span class="navbar-toggler-bar burger-lines"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <ul class="nav navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" data-toggle="dropdown">
-                                    <i class="nc-icon nc-palette"></i>
-                                    <span class="d-lg-none">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="dropdown nav-item">
-                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                    <i class="nc-icon nc-planet"></i>
-                                    <span class="notification" id="notificationNum" style="display: none"></span>
-                                    <span class="d-lg-none">通知</span>
-                                </a>
-                                <ul class="dropdown-menu" id="notification_dropdown">
-                                    <a class="dropdown-item" href="/student/notifications/">历史通知</a>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nc-icon nc-zoom-split"></i>
-                                    <span class="d-lg-block">&nbsp;Search</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <span class="no-icon">Account</span>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="no-icon">Dropdown</span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">
-                                    <span class="no-icon">登出</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- End Navbar -->
+            {% include "student/navbar.html" %}
             <div class="content">
                  <div class="container-fluid">
                     <div class="row" id="partOfTestTable">
@@ -166,34 +60,7 @@ Tip 2: you can also add an image using data-image tag
                                             <th>操作</th>
                                         </thead>
                                         <tbody>
-{#                                        {% for testRecord in testrecords %}#}
-{#                                            <tr>#}
-{#                                                <td>{{ forloop.counter }}</td>#}
-{#                                                <td>{{ testRecord.test__testname }}</td>#}
-{#                                                <td>{{ testRecord.test__testtime }}</td>#}
-{#                                                {% if testRecord.test__state == 0 %}#}
-{#                                                    <td>进行中</td>#}
-{#                                                {% else %}#}
-{#                                                    <td>已结束</td>#}
-{#                                                {% endif %}#}
-{#                                                <td>{{ testRecord.datetime }}</td>#}
-{#                                                <td>{{ testRecord.duration }}</td>#}
-{#                                                {% if testRecord.state == 0 %}#}
-{#                                                    <td>未考试</td>#}
-{#                                                {% elif testRecord.state == 1 %}#}
-{#                                                    <td>未考完</td>#}
-{#                                                {% else %}#}
-{#                                                    <td>已考完</td>#}
-{#                                                {% endif %}#}
-{#                                                <td>{{ testRecord.score }}</td>#}
-{#                                                <td>#}
-{#                                                    <button class="btn btn-primary">开始考试</button>#}
-{#                                                    <a href="{% url 'startTest' testRecord.recordid %}">#}
-{#                                                        <button class="btn btn-primary">开始考试</button>#}
-{#                                                    </a>#}
-{#                                                </td>#}
-{#                                            </tr>#}
-{#                                        {% endfor %}#}
+
                                         </tbody>
                                     </table>
                                 </div>

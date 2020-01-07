@@ -3,6 +3,9 @@ from django.db import models
 
 # user表控制登陆登出
 # 在mysql数据库中实现插入、修改、删除触发器确保user、teacher、student表的数据一致性
+from django.utils import timezone
+
+
 class User(models.Model):
     roleTuple = (
         (0, "teacher"),
@@ -43,10 +46,15 @@ class Section(models.Model):
 
 
 class Topic(models.Model):
+    topicTuple = (
+        (0, "normal"),
+        (1, "media"),
+    )
     topicid = models.AutoField(primary_key=True)
     topicname=models.CharField(max_length=60,default=None)
     content = models.TextField(null=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    topictype=models.IntegerField(choices=topicTuple,default=0)
     students = models.ManyToManyField(Student, through='Progress')
 
 
@@ -153,4 +161,14 @@ class QuestionRecord(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     content = models.CharField(max_length=200,null=True)
     istrue = models.IntegerField(null=True)
+
+# 学生提交实验
+class Experiment(models.Model):
+    experimentid=models.AutoField(primary_key=True)
+    experimentname=models.CharField(max_length=200)
+    content=models.TextField(null=True)
+    experimentdeadline=models.DateField(default=timezone.now)
+    experimentstatus=models.BooleanField(default=False)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE,default=None)
+
 

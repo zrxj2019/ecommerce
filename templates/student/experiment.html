@@ -1,0 +1,276 @@
+<!--
+=========================================================
+ Light Bootstrap Dashboard - v2.0.1
+=========================================================
+
+ Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard
+ Copyright 2019 Creative Tim (https://www.creative-tim.com)
+ Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE)
+
+ Coded by Creative Tim
+
+=========================================================
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "assets/img/apple-icon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>跨境电子商务教学平台-学生-考试</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstra/>pcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <!-- CSS Files -->
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet"/>
+    <link href="{% static "assets/css/light-bootstrap-dashboard.css" %} " rel="stylesheet"/>
+    <link href="{% static "DataTables/datatables.min.css" %} " rel="stylesheet"/>
+    <link href="{% static "assets/bootstrap-fileinput/css/fileinput.min.css" %} " rel="stylesheet"/>
+
+</head>
+<body>
+<div class="wrapper">
+    {% include "student/sidebar_student.html" %}
+    <div class="main-panel">
+        {% include "student/navbar.html" %}
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row" id="experiment_table_div">
+                    <div class="col-md-12">
+                        <div class="card strpied-tabled-with-hover">
+                            <div class="card-header ">
+                                <h4 class="card-title">实验信息</h4>
+                            </div>
+                            <div class="card-body table-full-width table-responsive">
+                                <table class="table table-hover table-striped" id="experiment_table">
+                                    <thead>
+                                    <th>序号</th>
+                                    <th>实验名称</th>
+                                    <th>截止日期</th>
+                                    <th>实验状态</th>
+                                    <th>操作</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav>
+                    <ul class="footer-menu">
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Blog
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-center">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    </p>
+                </nav>
+            </div>
+        </footer>
+        <!-- Mini Modal -->
+        <div class="modal fade modal-primary" id="experiment_modal" tabindex="-1" role="dialog"
+             aria-labelledby="model_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <h4 class="modal-title" id="modal_label"></h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h5></h5>
+                        <input id="upload-file" type="file" class="file-loading" name="attachment" multiple />
+                    </div>
+                    <div class="modal-footer">
+{#                        <button type="button" class="btn btn-link btn-simple">Back</button>#}
+                        <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  End Modal -->
+    </div>
+</div>
+</body>
+<!--   Core JS Files   -->
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/bootstrap.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static "assets/js/plugins/bootstrap-switch.js" %}"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static "assets/js/plugins/chartist.min.js" %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static "assets/js/plugins/bootstrap-notify.js" %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static "assets/js/light-bootstrap-dashboard.js" %} " type="text/javascript"></script>
+<script src="{% static "assets/js/demo.js" %}"></script>
+<script src="{% static "DataTables/datatables.min.js" %}"></script>
+{#<!-- file input js-->#}
+<script src="{% static "assets/bootstrap-fileinput/js/plugins/piexif.min.js" %}"></script>
+<script src="{% static "assets/bootstrap-fileinput/js/plugins/sortable.min.js" %}"></script>
+<script src="{% static "assets/bootstrap-fileinput/js/plugins/purify.min.js" %}"></script>
+<script src="{% static "assets/bootstrap-fileinput/js/fileinput.min.js" %}"></script>
+<script src="{% static "assets/bootstrap-fileinput/themes/fa/theme.js" %}"></script>
+<script src="{% static "assets/bootstrap-fileinput/js/locales/zh.js" %}"></script>
+<script type="text/javascript">
+    function showNotification(message, from, align) {
+        $.notify({
+            icon: "nc-icon nc-app",
+            message: message
+
+        }, {
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        // initialize with defaults
+        $("#upload-file").fileinput({'language':'zh'});
+        getExperiment();
+    });
+
+    var testTable = null;
+    function experimentModal(experimentid) {
+        //查询该实验的详细信息
+        $.ajax({
+            url: 'get_experiment_info',
+            type: "post",
+            data: {'experimentid':experimentid},
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if (data.status === 100) {
+                    $('#modal_label').text(data.result.experimentinfo.experimentname);
+                    $('#experiment_modal h5').text(data.result.experimentinfo.content);
+                    $('#experiment_modal').modal();
+                } else {
+                    showNotification(data.result.notification)
+                }
+            }
+        });
+    }
+    function getExperiment() {
+        $.ajax({
+            url: 'get_experiment',
+            type: "post",
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if (data.status === 100) {
+                    var experimentnum = data.result.experimentnum;
+                    var experiments = data.result.experiments;
+
+                    if (experimentnum != 0) {
+                        if (testTable != null) {
+                            testTable.destroy();
+                        }
+                        testTable = $('#experiment_table').DataTable({
+                            paging: true,
+                            searchable: false,
+                            autoWidth: false,
+                            info: false,
+                            filter: false,//搜索框
+                            ordering: false,
+                            destroy: true,
+                            stateSave: false,
+                            data: experiments,
+                            lengthChange: false,
+                            oLanguage: { // 国际化配置
+                                "sProcessing": "正在获取数据，请稍后...",
+                                "sLengthMenu": "显示 _MENU_ 条",
+                                "sZeroRecords": "没有找到数据",
+                                "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+                                "sInfoEmpty": "记录数为0",
+                                "sInfoFiltered": "(全部记录数 _MAX_ 条)",
+                                "sInfoPostFix": "",
+                                "sSearch": "查询",
+                                "sUrl": "",
+                                "oPaginate": {
+                                    "sFirst": "第一页",
+                                    "sPrevious": "上一页",
+                                    "sNext": "下一页",
+                                    "sLast": "最后一页"
+                                }
+                            },
+                            columns: [
+                                {
+                                    "data": null, "render": function (data, type, row, meta) {
+                                        return meta.row + 1;
+                                    }
+                                },
+                                {
+                                    "data": null, "render": function (data, type, row) {
+                                        return data[1];
+                                    }
+                                },
+                                {
+                                    "data": null, "render": function (data, type, row) {
+                                        return data[2];
+                                    }
+                                },
+                                {
+                                    "data": null, "render": function (data, type, row) {
+                                        if (data[3] === false)
+                                            return '未提交';
+                                        else if (data[3] === true)
+                                            return '已提交';
+                                    }
+                                },
+                                {
+                                    "data": null, "render": function (data, type, row) {
+                                        if (data[3] === false) {
+                                            return "<button class=\"btn btn-info btn-fill\" onclick=\"experimentModal('" + data[0] + "')\">提交</button>";
+                                        } else
+                                            return "<button class=\"btn btn-info btn-fill pull-right\" onclick=\"reviewTest('" + data[0] + "')\">查看</button>";
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                } else {
+                    showNotification(data.result.notification)
+                }
+            }
+        });
+    }
+
+</script>
+</html>

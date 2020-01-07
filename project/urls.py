@@ -18,8 +18,8 @@ Including another URLconf
 """
 from django.urls import path
 # from django.conf.urls import url
-from ecommerceWeb import views
-from ecommerceWeb.student import studentController
+from ecommerceweb import views
+from ecommerceweb.student import studentController
 from django.contrib import admin
 from django.urls import include
 
@@ -59,6 +59,10 @@ urlpatterns = [
     # ****在线学习模块****#
     path('student/onlinelearning/', views.student_online_learning),
     path('student/onlinelearning/get_section_details', studentController.getSectionDetails),
+    # ****实验模块****#
+    path('student/experiment/', views.student_experiment),
+    path('student/experiment/get_experiment', studentController.get_experiment),
+    path('student/experiment/get_experiment_info', studentController.get_experiment_info),
     # ***********教师*******************
     path('teacher/', views.main_teacher),
     path('teacher/test/', views.test_teacher),
