@@ -44,6 +44,23 @@ class Section(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     teachers = models.ManyToManyField(Teacher, through='Statistic')
 
+class SectionSimulation(models.Model):
+    simulationid=models.AutoField(primary_key=True)
+    simulationtype=models.IntegerField()
+    simulationtitle=models.TextField()
+    section=models.ForeignKey(Section, on_delete=models.CASCADE)
+
+class SectionSimulationAnswer(models.Model):
+    answerid = models.AutoField(primary_key=True)
+    answertitle=models.TextField()
+    content=models.TextField()
+    sectionsimulation = models.ForeignKey(SectionSimulation, on_delete=models.CASCADE)
+
+class SectionQuestion(models.Model):
+    questionid=models.AutoField(primary_key=True)
+    questiontitle=models.TextField()
+    content=models.TextField()
+    section=models.ForeignKey(Section, on_delete=models.CASCADE)
 
 class Topic(models.Model):
     topicTuple = (

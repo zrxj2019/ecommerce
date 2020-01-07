@@ -28,10 +28,20 @@ def getSectionDetails(request):
             pathlist = list(t.pathlist_set.all().values())
             temp_dict = {'topic': model_to_dict(t), 'pathlist': pathlist}
             topic_detail_list.append(temp_dict)
+        #查询所有模拟测试
+        section_simulations=section.sectionsimulation_set.all()
+        section_simulation_list=[]
+        for ss in section_simulations:
+            section_simulation_answer=list(ss.sectionsimulationanswer_set.all().values())
+            temp_dict={'section_simulation':model_to_dict(ss),'answers':section_simulation_answer}
+            section_simulation_list.append(temp_dict)
+        #问题
+        section_questions=list(section.sectionquestion_set.all().values())
+
         if len(topic_detail_list) > 0:
             return HttpResponse(json.dumps({
                 "status": 100,
-                "result": {'section': model_to_dict(section), 'topics': topic_detail_list}
+                "result": {'section': model_to_dict(section), 'topics': topic_detail_list,'sectionsimulations':section_simulation_list,'sectionquestions':section_questions}
             }))
         else:
             return HttpResponse(json.dumps({

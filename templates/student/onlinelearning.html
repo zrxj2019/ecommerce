@@ -94,6 +94,19 @@
 
                                                         </ul>
                                                     </section>
+                                                    <!--问题-->
+                                                    <section id="sectionSimulation">
+                                                        <h4>综合模拟测试：</h4>
+                                                        <p>
+
+                                                        </p>
+                                                    </section>
+                                                    <section id="sectionQuestion">
+                                                        <h4>问题：</h4>
+                                                        <p>
+
+                                                        </p>
+                                                    </section>
                                                 </div>
 
                                             </div>
@@ -246,7 +259,8 @@
                 console.info(resultJson);
                 if (resultJson.status === 100) {
                     $('#sectionDetail_div').show();
-                    {#$('#sectionDetail_pdf').hide();#}
+                    $('#sectionDetail_pdf').hide();
+                    $('#sectionSimulation').hide();
                     $('#sectionDetail_div .card-body section ul').html('');
                     $('#sectionDetail_div .card-title').text(resultJson.result.section.sectionname);
                     $('#sectionDetail_div .card-category').text(resultJson.result.section.content);
@@ -285,12 +299,50 @@
                                     "                                                            </li>";
                             } else if (resultJson.result.topics[i].topic.topictype == '1') {
                                 //课件
-
                                 $('#sectionDetail_pdf').attr('src', url_path + '/' + resultJson.result.topics[i].pathlist[0].path);
                                 $('#sectionDetail_pdf').show();
                             }
                         }
                         $('#sectionDetail_div .card-body section ul').html(htmltext);
+                    }
+                    var colors=['#33CCCC','#9988CC'];
+                    if(resultJson.result.sectionsimulations!=null){
+                        var htmltext = '';
+                        for (var i = 0; i <resultJson.result.sectionsimulations.length ; i++) {
+                            var ss=resultJson.result.sectionsimulations[i];
+                            htmltext+=ss.section_simulation.simulationtitle;
+                            if(ss.answers!=null){
+                                for (var j = 0; j <ss.answers.length ; j++) {
+                                    var answer=ss.answers[j];
+                                    htmltext+="<div class=\"col-md-6\">\n" +
+                                        "                                            <div class=\"card \" style=\"Background:"+colors[j%colors.length]+";\"\n" +
+                                        "                                                 onclick=\"document.getElementById('result"+i+"').innerHTML ='"+answer.content+"'\"\n" +
+                                        "                                                 onmouseover=\"document.getElementById('compare_pay"+j+"').style.fontWeight='bold'; document.getElementById('compare_pay"+j+"').style.textDecoration='underline'\"\n" +
+                                        "                                                 onmouseout=\"document.getElementById('compare_pay"+j+"').style.fontWeight='normal'; document.getElementById('compare_pay"+j+"').style.textDecoration='none'\">\n" +
+                                        "                                                <div class=\"card-body\" style=\"color: #FFFFFF\">\n" +
+                                        "                                                    <div class=\"typography-line\">\n" +
+                                        "                                                        <h3 id=\"compare_pay"+j+"\" style=\"text-align:center\">\n" +
+                                        "                                                           "+answer.answertitle+"</h3>\n" +
+                                        "                                                    </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                            </div>\n" +
+                                        "                                        </div>"
+                                }
+                            }
+                            htmltext+="<p id=\"result"+i+"\"></p>"
+                        }
+                        $('#sectionSimulation').show();
+                        $('#sectionSimulation p').html(htmltext);
+                    }
+                    if(resultJson.result.sectionquestions!=null){
+                        var htmltext = '';
+                        for (var i = 0; i <resultJson.result.sectionquestions.length ; i++) {
+                            var sq=resultJson.result.sectionquestions[i];
+                            htmltext+=sq.questiontitle;
+
+                        }
+                        $('#sectionQuestion').show();
+                        $('#sectionQuestion p').html(htmltext);
                     }
                 } else {
                     showNotification(result.result.notification);
