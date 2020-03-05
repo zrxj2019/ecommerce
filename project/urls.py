@@ -49,6 +49,8 @@ urlpatterns = [
     path('student/get_new_notifications/', views.get_new_notification_student),
     path('student/study/compare_pay/', views.study_compare_pay),
     path('student/study/pay/', views.study_pay),
+    # pixi测试
+    path('student/paypixitest/', views.pay_pixi_test),
     # 在各种界面获取新通知
     path('student/test/get_new_notifications/', views.get_new_notification_student),
     path('student/notifications/get_new_notifications/', views.get_new_notification_student),

@@ -82,10 +82,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ecommerce',
-        'HOST':'10.108.8.67',
-        'USER':'remote',
-        'PASSWORD':'123456',
-        'PORT':'3306'
+        # 'HOST':'10.108.8.67',
+        # 'USER':'remote',
+        # 'PASSWORD':'123456',
+        # 'PORT':'3306',
+        'HOST': '123.56.124.114',
+        'USER':'root',
+        'PASSWORD':'zrxj123',
+        'PORT':'3306',
     }
 }
 
