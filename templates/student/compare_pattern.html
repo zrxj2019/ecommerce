@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>* {
+        padding: 0;
+        margin: 0
+    }</style>
+</head>
+<body>
+<div id="compare_pattern">
+
+</div>
+</body>
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/plugins/pixi.min.js" %}"></script>
+<script src="{% static "assets/js/plugins/tink.js" %}"></script>
+<script>
+    $(document).ready(function () {
+        var url_path = window.location.protocol + "/" + window.location.host;
+        //初始化app容器
+        //Aliases
+        let Application = PIXI.Application,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            Sprite = PIXI.Sprite,
+            TextureCache = PIXI.utils.TextureCache,
+            Container = PIXI.Container;
+        let app = new Application({
+            width: 1280,         // default: 800
+            height: 600,        // default: 600
+            antialias: true,    // default: false
+            transparent: false, // default: false
+            resolution: 1,       // default: 1
+            backgroundColor: 0xffffff
+        });
+        //获取渲染器
+        let renderer = app.renderer;
+        renderer.view.style.position = "absolute";
+        renderer.view.style.display = "block";
+        renderer.autoResize = true;
+        renderer.resize(window.innerWidth, window.innerHeight);
+        $("#compare_pattern").html(renderer.view);
+        let app_width = renderer.width;
+        //tink
+        {#let scale = scaleToWindow(renderer.view);#}
+        let t = new Tink(PIXI, renderer.view);
+        //load an image and run the `setup` function when it's done
+        loader
+            .add("/static/compare_pattern/ecommerce.json")
+            .load(setup);
+        //三大场景
+        let selectScene, knowledgeScene, experimentScene;
+        //选择场景的所有精灵
+        let introduction, M2C_button, C2C_button, B2C_button, merchant_button;
+        //知识讲解场景的所有精灵
+        let blackboard, knowledge_container, knowledge_title, knowledge_text, confirm_button;
+        //模拟实验场景的所有精灵
+        let experiment_background, experiment_title, experiment_text;
+        let money_state_text, car_state_text, money_state_pic, car_state_pic;
+        //0,1,2,3,4,5
+        let manufacturer, seller, car, buyer, money, customhouse;
+        let retry_button, return_button;
+        let entity_list = [];
+        let money_list = [];
+        let car_list = [];
+        let M2C_money_list = [3, 0];
+        let M2C_car_list = [0, 5, 3];
+        money_list.push(M2C_money_list);
+        car_list.push(M2C_car_list);
+        let C2C_money_list = [3, 0];
+        let C2C_car_list = [0, 5, 3];
+        money_list.push(C2C_money_list);
+        car_list.push(C2C_car_list);
+        let B2C_money_list = [3, 1, 0];
+        let B2C_car_list = [0, 1, 5, 3];
+        money_list.push(B2C_money_list);
+        car_list.push(B2C_car_list);
+        let merchant_money_list = [3, 1, 0];
+        let merchant_car_list = [0, 1, 5, 3];
+        money_list.push(merchant_money_list);
+        car_list.push(merchant_car_list);
+        //Define any variables that are used in more than one function
+        let state, id;
+        let current_state = 0;
+
+        function setup() {
+            id = loader.resources["/static/compare_pattern/ecommerce.json"].textures;
+            //创建按钮选择场景
+            selectScene = new Container();
+            app.stage.addChild(selectScene);
+            //创建知识讲解场景
+            knowledgeScene = new Container();
+            app.stage.addChild(knowledgeScene);
+            //开始时，应该不显示
+            knowledgeScene.visible = false;
+            //创建最后路径选择场景
+            experimentScene = new Container();
+            app.stage.addChild(experimentScene);
+            //开始时，应该不显示
+            experimentScene.visible = false;
+
+            /*
+            开始按钮选择场景
+             */
+            let title_style = new PIXI.TextStyle({
+                fontFamily: "Arial",
+                fontSize: 36,
+                fill: "black",
+                stroke: '#000000',
+                {#strokeThickness: 4,#}
+                dropShadow: false,
+                {#dropShadowColor: "#000000",#}
+                {#dropShadowBlur: 4,#}
+                {#dropShadowAngle: Math.PI / 6,#}
+                {#dropShadowDistance: 6,#}
+            });
+            let text_style = new PIXI.TextStyle({
+                fontFamily: "Arial",
+                fontSize: 16,
+                fill: "black",
+                stroke: '#000000',
+                {#strokeThickness: 4,#}
+                dropShadow: false,
+                {#dropShadowColor: "#000000",#}
+                {#dropShadowBlur: 4,#}
+                {#dropShadowAngle: Math.PI / 6,#}
+                {#dropShadowDistance: 6,#}
+            });
+            introduction = new PIXI.Text("请选择一种运营模式", title_style);
+            introduction.position.set(app_width / 2 - introduction.width / 2, 96);
+            selectScene.addChild(introduction);
+
+            let M2C_buttons = [
+                id["compare_pattern-M2C_up.png"],
+                id["compare_pattern-M2C_over.png"],
+                id["compare_pattern-M2C_down.png"]
+            ];
+            let button_width = M2C_buttons[0].width;
+
+            M2C_button = t.button(M2C_buttons, app_width / 2 - button_width / 2, 192);
+            selectScene.addChild(M2C_button);
+            let C2C_buttons = [
+                id["compare_pattern-C2C_up.png"],
+                id["compare_pattern-C2C_over.png"],
+                id["compare_pattern-C2C_down.png"]
+            ];
+            C2C_button = t.button(C2C_buttons, app_width / 2 - button_width / 2, 256);
+            selectScene.addChild(C2C_button);
+            let B2C_buttons = [
+                id["compare_pattern-B2C_up.png"],
+                id["compare_pattern-B2C_over.png"],
+                id["compare_pattern-B2C_down.png"]
+            ];
+            B2C_button = t.button(B2C_buttons, app_width / 2 - button_width / 2, 320);
+            selectScene.addChild(B2C_button);
+            let merchant_buttons = [
+                id["compare_pattern-merchant_up.png"],
+                id["compare_pattern-merchant_over.png"],
+                id["compare_pattern-merchant_down.png"]
+            ];
+            merchant_button = t.button(merchant_buttons, app_width / 2 - button_width / 2, 384);
+            selectScene.addChild(merchant_button);
+
+            /*
+            知识讲解场景
+             */
+            //blackboard
+            blackboard = new Sprite(id["blackboard.png"]);
+            blackboard.width = app_width / 4 * 3;
+            if (blackboard.width > 800) {
+                blackboard.width = 800;
+            }
+            blackboard.height = 400;
+
+            knowledge_container = new Container();
+            knowledge_container.width = blackboard.width;
+            knowledge_container.height = blackboard.height;
+            knowledge_container.position.set(app_width / 2 - blackboard.width / 2, 80);
+            knowledge_container.addChild(blackboard);
+
+            knowledge_text = new PIXI.Text("M2C (manufacturer to consumer) \n" +
+                "M2C是生产制造商直接面对消费者的购物模式。这是一种基于\n" +
+                "网上B2C,C2C基础之上的网上购物模式。\n", text_style);
+            knowledge_text.position.set(knowledge_container.width / 16, 150);
+            knowledge_container.addChild(knowledge_text);
+            knowledgeScene.addChild(knowledge_container);
+
+
+            knowledge_title = new PIXI.Text("M2C模式", title_style);
+            knowledge_title.position.set(app_width / 2 - knowledge_title.width / 2, 32);
+            knowledgeScene.addChild(knowledge_title);
+
+            let confirm_buttons = [
+                id["compare_pattern-confirm_up.png"],
+                id["compare_pattern-confirm_over.png"],
+                id["compare_pattern-confirm_down.png"]
+            ];
+            let confirm_button_width = confirm_buttons[0].width;
+            confirm_button = t.button(confirm_buttons, app_width / 2 - confirm_button_width / 2, 500);
+            knowledgeScene.addChild(confirm_button);
+
+            /*
+            模拟实验场景
+             */
+            //background
+            experiment_background = new Sprite(id['background.jpg']);
+            experiment_background.width = app_width;
+            experiment_background.height = 600;
+            experimentScene.addChild(experiment_background);
+
+            let experiment_title_style = new PIXI.TextStyle({
+                fontFamily: "Arial",
+                fontSize: 36,
+                fill: "white",
+                stroke: '#000000',
+                {#strokeThickness: 4,#}
+                dropShadow: false,
+                {#dropShadowColor: "#000000",#}
+                {#dropShadowBlur: 4,#}
+                {#dropShadowAngle: Math.PI / 6,#}
+                {#dropShadowDistance: 6,#}
+            });
+            experiment_title = new PIXI.Text("M2C模式", experiment_title_style);
+            experimentScene.addChild(experiment_title);
+            let experiment_text_style = new PIXI.TextStyle({
+                fontFamily: "Arial",
+                fontSize: 16,
+                fill: "white",
+                stroke: '#000000',
+                {#strokeThickness: 4,#}
+                dropShadow: false,
+                {#dropShadowColor: "#000000",#}
+                {#dropShadowBlur: 4,#}
+                {#dropShadowAngle: Math.PI / 6,#}
+                {#dropShadowDistance: 6,#}
+            });
+            experiment_text = new PIXI.Text("请用鼠标画出该模式下的资金流和商品物流。\n" +
+                "(按住消费者下的资金开始模拟，并将其拖动经过必要环节)", experiment_text_style);
+            experiment_text.position.set(0, 48);
+            experimentScene.addChild(experiment_text);
+
+            buyer = new Sprite(id['消费者.png']);
+            buyer.width = app_width / 32;
+            buyer.height = app_width / 32;
+            buyer.position.set(app_width / 16 * 13, 200);
+            experimentScene.addChild(buyer);
+
+            money = new Sprite(id['资金.png']);
+            money.width = app_width / 32;
+            money.height = app_width / 32;
+            money.position.set(app_width / 16 * 13 + app_width / 64, 200 + app_width / 64);
+            t.makeDraggable(money);
+            experimentScene.addChild(money);
+
+            manufacturer = new Sprite(id['厂商.png']);
+            manufacturer.width = app_width / 32;
+            manufacturer.height = app_width / 32;
+            manufacturer.position.set(app_width / 8, 180);
+            experimentScene.addChild(manufacturer);
+
+            seller = new Sprite(id['卖家.png']);
+            seller.width = app_width / 32;
+            seller.height = app_width / 32;
+            seller.position.set(app_width / 32 * 17, 160);
+            experimentScene.addChild(seller);
+
+            car = new Sprite(id['物流.png']);
+            car.width = app_width / 32;
+            car.height = app_width / 32;
+            {#car.position.set(app_width / 32 * 17+ app_width / 64, 160+ app_width / 64);#}
+            t.makeDraggable(car);
+            experimentScene.addChild(car);
+
+            customhouse = new Sprite(id['海关.png']);
+            customhouse.width = app_width / 32;
+            customhouse.height = app_width / 32;
+            customhouse.position.set(app_width / 32 * 27, 230);
+            experimentScene.addChild(customhouse);
+
+            entity_list.push(manufacturer);
+            entity_list.push(seller);
+            entity_list.push(car);
+            entity_list.push(buyer);
+            entity_list.push(money);
+            entity_list.push(customhouse);
+
+            //资金流状态和物流状态
+            money_state_text = new PIXI.Text("资金流:", experiment_text_style);
+            money_state_pic = new Sprite(id['错误.png']);
+            money_state_pic.width = 16;
+            money_state_pic.height = 16;
+            money_state_text.position.set(app_width - money_state_text.width - money_state_pic.width - 10, 0);
+            money_state_pic.position.set(app_width - money_state_pic.width - 10, 0);
+            experimentScene.addChild(money_state_text);
+            experimentScene.addChild(money_state_pic);
+            car_state_text = new PIXI.Text("物流:", experiment_text_style);
+            car_state_pic = new Sprite(id['错误.png']);
+            car_state_pic.width = 16;
+            car_state_pic.height = 16;
+            car_state_text.position.set(app_width - car_state_text.width - car_state_pic.width - 10, 32);
+            car_state_pic.position.set(app_width - money_state_pic.width - 10, 32);
+            experimentScene.addChild(car_state_text);
+            experimentScene.addChild(car_state_pic);
+
+            let retry_buttons = [
+                id["compare_pattern-retry_up.png"],
+                id["compare_pattern-retry_over.png"],
+                id["compare_pattern-retry_down.png"]
+            ];
+            retry_button = t.button(retry_buttons, app_width / 4, 320);
+            experimentScene.addChild(retry_button);
+            retry_button.visible = false;
+            let return_buttons = [
+                id["compare_pattern-return_up.png"],
+                id["compare_pattern-return_over.png"],
+                id["compare_pattern-return_down.png"]
+            ];
+            return_button = t.button(return_buttons, app_width - app_width / 4 - retry_buttons[0].width, 320);
+            experimentScene.addChild(return_button);
+            return_button.visible = false;
+            //Set the game state
+            state = play;
+
+            //Start the game loop
+            app.ticker.add(delta => gameLoop(delta));
+        }
+
+        function gameLoop(delta) {
+            //Start the loop
+            requestAnimationFrame(gameLoop);
+            state();
+            t.update();
+            app.render(app.stage);
+
+        }
+
+        function play(delta) {
+            selectScene.visible = true;
+            experimentScene.visible = false;
+            //判断按钮是否被按下
+            if (M2C_button.pressed) {
+                current_state = 0;
+                //场景切换
+                state = knowledge;
+                knowledge_title.text = "M2C模式";
+                knowledge_text.text = "M2C (manufacturer to consumer) \n" +
+                    "M2C是生产制造商直接面对消费者的购物模式。这是一种基于\n" +
+                    "网上B2C,C2C基础之上的网上购物模式。\n";
+            }
+            if (C2C_button.pressed) {
+                current_state = 1;
+                //场景切换
+                state = knowledge;
+                knowledge_title.text = "C2C模式";
+                knowledge_text.text = "C2C (consumer to consumer) \n" +
+                    "指是个人与个人之间的消费活动。\n";
+            }
+            if (B2C_button.pressed) {
+                current_state = 2;
+                //场景切换
+                state = knowledge;
+                knowledge_title.text = "B2C模式";
+                knowledge_text.text = "B2C (business to consumer) \n" +
+                    "直接面向消费者销售产品和服务商业零售模式。\n";
+            }
+            if (merchant_button.pressed) {
+                current_state = 3;
+                //场景切换
+                state = knowledge;
+                knowledge_title.text = "特卖会模式";
+                knowledge_text.text = "M2C (manufacturer to consumer) \n" +
+                    "M2C是生产制造商直接面对消费者的购物模式。这是一种基于\n" +
+                    "网上B2C,C2C基础之上的网上购物模式。\n";
+            }
+        }
+
+        function knowledge() {
+            selectScene.visible = false;
+            knowledgeScene.visible = true;
+            if (confirm_button.pressed) {
+                //场景切换，开始模拟实验
+                state = experiment;
+                if (current_state === 0) {
+                    experiment_title.text = "M2C模式";
+                    manufacturer.texture = id['厂商.png'];
+                    car.x = manufacturer.x + app_width / 64;
+                    car.y = manufacturer.y + app_width / 64;
+                } else if (current_state === 1) {
+                    experiment_title.text = "C2C模式";
+                    manufacturer.texture = id['消费者.png'];
+                    car.x = manufacturer.x + app_width / 64;
+                    car.y = manufacturer.y + app_width / 64;
+                } else if (current_state === 2) {
+                    experiment_title.text = "B2C模式";
+                    manufacturer.texture = id['厂商.png'];
+                    car.x = manufacturer.x + app_width / 64;
+                    car.y = manufacturer.y + app_width / 64;
+                } else {
+                    experiment_title.text = "特卖会模式";
+                    manufacturer.texture = id['厂商.png'];
+                    car.x = manufacturer.x + app_width / 64;
+                    car.y = manufacturer.y + app_width / 64;
+                }
+            }
+        }
+
+        let money_step = 1;
+        let car_step = 1;
+        line_list = [];
+
+        function experiment() {
+            knowledgeScene.visible = false;
+            experimentScene.visible = true;
+            let current_money_list = money_list[current_state];
+            let current_car_list = car_list[current_state];
+            if (money_step < current_money_list.length) {
+                if (hitTestRectangle(money, entity_list[current_money_list[money_step]])) {
+                    start = entity_list[current_money_list[money_step - 1]];
+                    end = entity_list[current_money_list[money_step]];
+                    //画线
+                    let line = new PIXI.Graphics();
+                    line.lineStyle(1, 0xD5E8D4, 1);
+                    line.moveTo(start.x, start.y);
+                    line.lineTo(end.x, end.y);
+                    experimentScene.addChild(line);
+                    line_list.push(line);
+                    money_step += 1;
+                    if (money_step >= current_money_list.length) {
+                        money_state_pic.texture = id['正确.png'];
+                    }
+                }
+            } else if (car_step < current_car_list.length && money_step >= current_money_list.length) {
+                if (hitTestRectangle(car, entity_list[current_car_list[car_step]])) {
+                    start = entity_list[current_car_list[car_step - 1]];
+                    end = entity_list[current_car_list[car_step]];
+                    //画线
+                    let line = new PIXI.Graphics();
+                    line.lineStyle(2, 0xF8CECC, 1);
+                    line.moveTo(start.x + start.width, start.y + start.height);
+                    line.lineTo(end.x + end.width, end.y + end.height);
+                    experimentScene.addChild(line);
+                    line_list.push(line);
+                    car_step += 1;
+                    if (car_step >= current_car_list.length) {
+                        car_state_pic.texture = id['正确.png'];
+                        retry_button.visible = true;
+                        return_button.visible = true;
+                    }
+                }
+            }
+            if (car_step >= current_car_list.length) {
+                if (retry_button.pressed) {
+                    //重新开始
+                    for (let i = 0; i < line_list.length; i++) {
+                        experimentScene.removeChild(line_list[i]);
+                    }
+                    money_state_pic.texture = id['错误.png'];
+                    car_state_pic.texture = id['错误.png'];
+                    retry_button.visible = false;
+                    return_button.visible = false;
+                    money.x = app_width / 16 * 13 + app_width / 64;
+                    money.y = 200 + app_width / 64;
+                    car.x = manufacturer.x + app_width / 64;
+                    car.y = manufacturer.y + app_width / 64;
+                    money_step = 1;
+                    car_step = 1;
+                }
+                if (return_button.pressed) {
+                    //重置
+                    for (let i = 0; i < line_list.length; i++) {
+                        experimentScene.removeChild(line_list[i]);
+                    }
+                    money_state_pic.texture = id['错误.png'];
+                    car_state_pic.texture = id['错误.png'];
+                    retry_button.visible = false;
+                    return_button.visible = false;
+                    money.x = app_width / 16 * 13 + app_width / 64;
+                    money.y = 200 + app_width / 64;
+                    if (current_state === 0) {
+                        car.x = manufacturer.x + app_width / 64;
+                        car.y = manufacturer.y + app_width / 64;
+                    }
+                    money_step = 1;
+                    car_step = 1;
+                    state = play;
+                }
+            }
+        }
+
+        function hitTestRectangle(r1, r2) {
+
+            //Define the variables we'll need to calculate
+            let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+            //hit will determine whether there's a collision
+            hit = false;
+
+            //Find the center points of each sprite
+            r1.centerX = r1.x + r1.width / 2;
+            r1.centerY = r1.y + r1.height / 2;
+            r2.centerX = r2.x + r2.width / 2;
+            r2.centerY = r2.y + r2.height / 2;
+
+            //Find the half-widths and half-heights of each sprite
+            r1.halfWidth = r1.width / 2;
+            r1.halfHeight = r1.height / 2;
+            r2.halfWidth = r2.width / 2;
+            r2.halfHeight = r2.height / 2;
+
+            //Calculate the distance vector between the sprites
+            vx = r1.centerX - r2.centerX;
+            vy = r1.centerY - r2.centerY;
+
+            //Figure out the combined half-widths and half-heights
+            combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+            combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+            //Check for a collision on the x axis
+            if (Math.abs(vx) < combinedHalfWidths) {
+
+                //A collision might be occuring. Check for a collision on the y axis
+                if (Math.abs(vy) < combinedHalfHeights) {
+
+                    //There's definitely a collision happening
+                    hit = true;
+                } else {
+
+                    //There's no collision on the y axis
+                    hit = false;
+                }
+            } else {
+
+                //There's no collision on the x axis
+                hit = false;
+            }
+
+            //`hit` will be either `true` or `false`
+            return hit;
+        };
+    });
+</script>
+</html>

@@ -102,3 +102,5 @@ def get_experiment_info(request):
             "result": {"notification": "系统错误！"}
         }))
 
+###########################对比不同运营方式##########################
+

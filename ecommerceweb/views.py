@@ -49,6 +49,18 @@ def student_experiment(request):
     if validate != None:
         return validate
     return render(request, 'student/experiment.html',{'username':request.session.get('username')})
+
+def compare(request):
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
+    return render(request, 'student/compare.html', {'username': request.session.get('username')})
+
+def compare_pattern(request):
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
+    return render(request, 'student/compare_pattern.html', {'username': request.session.get('username')})
 #***********************登录登出相关***********************
 #登录验证器，验证是否登录
 def loginValidator(request):

@@ -59,6 +59,9 @@ urlpatterns = [
     # ****在线学习模块****#
     path('student/onlinelearning/', views.student_online_learning),
     path('student/onlinelearning/get_section_details', studentController.getSectionDetails),
+    # ****各运营模式对比****#
+    path('student/compare/',views.compare),
+    path('student/compare_pattern/',views.compare_pattern),
     # ****实验模块****#
     path('student/experiment/', views.student_experiment),
     path('student/experiment/get_experiment', studentController.get_experiment),
