@@ -1,0 +1,518 @@
+<!-- 
+=========================================================
+ Light Bootstrap Dashboard - v2.0.1
+=========================================================
+
+ Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard
+ Copyright 2019 Creative Tim (https://www.creative-tim.com)
+ Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE)
+
+ Coded by Creative Tim
+
+=========================================================
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 echarts.js -->
+    <script src='{% static "assets/js/plugins/echarts.js" %}'></script>
+    <script src='{% static "assets/js/plugins/macarons.js" %}'></script>
+
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "assets/img/apple-icon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>跨境电子商务教学平台-学生</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "assets/css/light-bootstrap-dashboard.css" %} " rel="stylesheet" />
+</head>
+
+<body>
+    <div class="wrapper">
+        {% include "student/sidebar_student.html"%}
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="user/"> 欢迎，{{ data }} </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+                        <ul class="navbar-nav ml-auto">
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="notification">4</span>
+                                    <span class="no-icon">新消息提醒</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">提醒1</a>
+                                    <a class="dropdown-item" href="#">提醒2</a>
+                                    <a class="dropdown-item" href="#">提醒3</a>
+                                    <a class="dropdown-item" href="#">提醒4</a>
+                                    <div class="divider"></div>
+                                    <a class="dropdown-item" href="#">清除未读</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">
+                                    <span class="no-icon">登出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h2 class="card-title" style="text-align: center">支付技术对比</h2>
+                                    <p class="card-category" style="text-align: center">跨境电商、外贸、传统电商</p>
+                                </div>
+                                <div class="card-body ">
+                                    <div>
+                                    <ul>
+                                    <li>跨境电商中的支付主要有两种：
+                                        <ul>
+                                            <li><dl><dt>跨境第三方支付</dt><dd>消费者用本国货币在境外网站下单，通过试点的支付机构转化成外币付给境外商家。</dd></dl></li>
+                                            <li><dl><dt>跨境人民币支付</dt><dd>以人民币结算，省去币种兑换，缩短了支付周期（T+3日内），也避免了汇差损失。</dd></dl></li>
+                                            <img src="{% static "assets/img/compare_pay_1.jpeg" %}" width="900px">
+                                        </ul>
+                                    </li>
+                                    <li>传统的国际贸易中主要采用三种方式：
+                                        <ul>
+                                            <li><dl><dt>电汇</dt><dd>汇款人将一定款项交存汇款银行，汇款银行通过电报或电传给目的地分行或代理行 (汇入行)，指示汇入行向收款人支付一定金额的一种汇款方式。</dd></dl></li>
+                                            <li><dl><dt>托收</dt><dd>出口商（债权人）为向国外进口商（债务人）收取货款，开具汇票委托出口地银行通过其在进口地银行的联行或代理行向进口商收款的结算方式。</dd></dl></li>
+                                            <li><dl><dt>信用证</dt><dd>开证银行应申请人(买方)要求并按其指示向第三方开立的载有一定金额的、在一定的期限内凭符合规定单据付款书面保证文件。信用证是国际贸易中最主要、常用的支付方式。</dd></dl></li>
+                                            <img src="{% static "assets/img/compare_pay_2.jpeg" %}" width="900px" height="400px">
+                                        </ul>
+                                        </li>
+                                    <li>电子商务常用的三种支付手段：
+                                        <ul>
+                                        <li><dl><dt>汇款</dt><dd>邮局汇款是顾客将订单金额通过邮政部门汇到商户的一种结算支付方式。</dd></dl></li>
+                                        <li><dl><dt>货到付款</dt><dd>指按照客户提交的订单内容，在承诺配送时限内送货，签收货物并且完成付款。</dd></dl></li>
+                                        <li><dl><dt>网上支付</dt><dd>以金融电子化网络为基础，以商用电子化工具和各类交易卡为媒介，以电子计算机技术和通信技术为手段，以二进制数据形式存储，并通过计算机网络系统以电子信息传递形式实现的流通和支付。</dd>
+                                            <dd>网上银行卡转帐支付：电子商务的交易通过网络，利用银行卡进行支付的方式。</dd>
+                                            <dd>第三方支付平台结算支付：如支付宝等，是当前国内服务数量最多的支付模式。</dd></dl></li>
+                                        </ul>
+                                    </li>
+                                    </ul>
+                                    </div>
+                                    <hr/>
+                                    <div id = "addpixi" style="width:800px;margin:0 auto"></div>
+
+
+                                    <hr/>
+                                    <div>
+                                        问题：把国内电商范围扩大至跨境电商，收汇款方式需要考虑哪些问题？
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<!--   Core JS Files   -->
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/bootstrap.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static "assets/js/plugins/bootstrap-switch.js" %}"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static "assets/js/plugins/chartist.min.js" %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static "assets/js/plugins/bootstrap-notify.js" %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static "assets/js/light-bootstrap-dashboard.js" %} " type="text/javascript"></script>
+<script src="{% static "assets/js/demo.js" %}"></script>
+<script src='{% static "assets/js/plugins/pixi.min.js" %}'></script>
+<script type="text/javascript">
+    function showNotification(message,from, align) {
+        $.notify({
+            icon: "nc-icon nc-app",
+            message: message
+
+        }, {
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+        {#demo.showNotification();#}
+
+    });
+</script>
+<script type="text/javascript">
+    //Aliases
+let Application = PIXI.Application,
+    Container = PIXI.Container,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    TextureCache = PIXI.utils.TextureCache,
+    Sprite = PIXI.Sprite,
+    Rectangle = PIXI.Rectangle;
+    Graphics = PIXI.Graphics;
+
+    //Create a Pixi Application
+let app = new Application({
+    width: 800,
+    height: 600,
+    antialiasing: true,
+    transparent: false,
+    resolution: 1
+  }
+);
+
+    //Add the canvas that Pixi automatically created for you to the HTML document
+    document.getElementById("addpixi").appendChild(app.view);
+
+
+    //load an image and run the `setup` function when it's done
+    loader
+      .add([
+          '{% static "assets/img/study_compare/map.jpg" %}',
+          '{% static "assets/img/study_compare/box.png" %}',
+          '{% static "assets/img/study_compare/face.png" %}',
+          '{% static "assets/img/study_compare/pay.png" %}',
+          '{% static "assets/img/study_compare/sad.png" %}',
+          '{% static "assets/img/study_compare/smile.png" %}',
+          '{% static "assets/img/study_compare/time.png" %}',
+          '{% static "assets/img/study_compare/money.png" %}',
+          '{% static "assets/img/study_compare/question.png" %}'
+      ])
+      .load(setup_compare);
+    let background_compare, beginScene_compare, eCommerceScene_compare, smile_compare_buy, face_compare_buy,
+    sad_compare_buy, smile_compare_sell, face_compare_sell, sad_compare_sell, compare_mode, title_compare,
+    compare_option1, compare_option2, compare_option3, pay_compare, money_compare, box_compare, state, endText,
+    question_compare, paid, again, againText, hasTicker;
+    //This `setup` function will run when the image has loaded
+    function setup_compare() {
+        beginScene_compare = new Container();
+        app.stage.addChild(beginScene_compare);
+        compare_mode = 0;
+        hasTicker = false;
+        //beginScene_compare.visible = false;
+
+        let backgroundTexture = TextureCache['{% static "assets/img/study_compare/map.jpg" %}'];
+        background_compare = new Sprite(backgroundTexture);
+        background_compare.scale.set(2, 2);
+        background_compare.y = 50;
+        beginScene_compare.addChild(background_compare);
+
+        let roundBox1 = new Graphics();
+        roundBox1.lineStyle(4, 0x99CCFF, 1);
+        roundBox1.beginFill(0x66CCFF);
+        roundBox1.drawRoundedRect(0, 0, 300, 600/7, 10)
+        roundBox1.endFill();
+        roundBox1.x = 250;
+        roundBox1.y = 600/7 + 20;
+        beginScene_compare.addChild(roundBox1);
+        let roundBox2 = new Graphics();
+        roundBox2.lineStyle(4, 0x99CCFF, 1);
+        roundBox2.beginFill(0x66CCFF);
+        roundBox2.drawRoundedRect(0, 0, 300, 600/7, 10)
+        roundBox2.endFill();
+        roundBox2.x = 250;
+        roundBox2.y = 1800/7 + 20;
+        beginScene_compare.addChild(roundBox2);
+        let roundBox3 = new Graphics();
+        roundBox3.lineStyle(4, 0x99CCFF, 1);
+        roundBox3.beginFill(0x66CCFF);
+        roundBox3.drawRoundedRect(0, 0, 300, 600/7, 10)
+        roundBox3.endFill();
+        roundBox3.x = 250;
+        roundBox3.y = 3000/7 + 20;
+        beginScene_compare.addChild(roundBox3);
+
+        roundBox1.interactive = true;
+        roundBox2.interactive = true;
+        roundBox3.interactive = true;
+        roundBox1.buttonMode = true;
+        roundBox2.buttonMode = true;
+        roundBox3.buttonMode = true;
+
+        roundBox1.on('pointerdown', learnClick1);
+        roundBox2.on('pointerdown', learnClick2);
+        roundBox3.on('pointerdown', learnClick3);
+
+
+        let style_compare = new PIXI.TextStyle({
+          fontFamily: "Arial",
+          fontSize: 36,
+          fill: "white"
+        });
+        title_compare = new PIXI.Text("在跨境电子商务的场景中，应该使用哪种支付方式", style_compare);
+        title_compare.x = 5;
+        title_compare.y = 20;
+        beginScene_compare.addChild(title_compare);
+        compare_option1 = new PIXI.Text("境内第三方支付", style_compare);
+        compare_option1.x = 275;
+        compare_option1.y = 130;
+        beginScene_compare.addChild(compare_option1);
+        compare_option2 = new PIXI.Text("电汇", style_compare);
+        compare_option2.x = 360;
+        compare_option2.y = 130 + 1200/7;
+        beginScene_compare.addChild(compare_option2);
+        compare_option3 = new PIXI.Text("跨境第三方支付", style_compare);
+        compare_option3.x = 275;
+        compare_option3.y = 130 + 2400/7;
+        beginScene_compare.addChild(compare_option3);
+
+
+
+        eCommerceScene_compare = new Container();
+        app.stage.addChild(eCommerceScene_compare);
+        eCommerceScene_compare.visible = false;
+        let smileTexture_buy = TextureCache['{% static "assets/img/study_compare/smile.png" %}'];
+        smile_compare_buy = new Sprite(smileTexture_buy);
+        smile_compare_buy.scale.set(0.5, 0.5);
+        smile_compare_buy.x = 50;
+        smile_compare_buy.y = 50;
+        eCommerceScene_compare.addChild(smile_compare_buy);
+        let faceTexture_buy = TextureCache['{% static "assets/img/study_compare/face.png" %}'];
+        face_compare_buy = new Sprite(faceTexture_buy);
+        face_compare_buy.scale.set(0.5, 0.5);
+        face_compare_buy.x = 50;
+        face_compare_buy.y = 50;
+        eCommerceScene_compare.addChild(face_compare_buy);
+        let sadTexture_buy = TextureCache['{% static "assets/img/study_compare/sad.png" %}'];
+        sad_compare_buy = new Sprite(sadTexture_buy);
+        sad_compare_buy.scale.set(0.5, 0.5);
+        sad_compare_buy.x = 50;
+        sad_compare_buy.y = 50;
+        eCommerceScene_compare.addChild(sad_compare_buy);
+        let smileTexture_sell = TextureCache['{% static "assets/img/study_compare/smile.png" %}'];
+        smile_compare_sell = new Sprite(smileTexture_sell);
+        smile_compare_sell.scale.set(0.5, 0.5);
+        smile_compare_sell.x = 650;
+        smile_compare_sell.y = 50;
+        eCommerceScene_compare.addChild(smile_compare_sell);
+        let faceTexture_sell = TextureCache['{% static "assets/img/study_compare/face.png" %}'];
+        face_compare_sell = new Sprite(faceTexture_sell);
+        face_compare_sell.scale.set(0.5, 0.5);
+        face_compare_sell.x = 650;
+        face_compare_sell.y = 50;
+        eCommerceScene_compare.addChild(face_compare_sell);
+        let sadTexture_sell = TextureCache['{% static "assets/img/study_compare/sad.png" %}'];
+        sad_compare_sell = new Sprite(sadTexture_sell);
+        sad_compare_sell.scale.set(0.5, 0.5);
+        sad_compare_sell.x = 650;
+        sad_compare_sell.y = 50;
+        eCommerceScene_compare.addChild(sad_compare_sell);
+        let payTexture = TextureCache['{% static "assets/img/study_compare/pay.png" %}'];
+        pay_compare = new Sprite(payTexture);
+        pay_compare.scale.set(0.5, 0.5);
+        pay_compare.x = 350;
+        pay_compare.y = 450;
+        eCommerceScene_compare.addChild(pay_compare);
+        let moneyTexture = TextureCache['{% static "assets/img/study_compare/money.png" %}'];
+        money_compare = new Sprite(moneyTexture);
+        money_compare.scale.set(0.25, 0.25);
+        money_compare.x = 650;
+        money_compare.y = 150;
+        eCommerceScene_compare.addChild(money_compare);
+        let boxTexture = TextureCache['{% static "assets/img/study_compare/box.png" %}'];
+        box_compare = new Sprite(boxTexture);
+        box_compare.scale.set(0.25, 0.25);
+        box_compare.x = 50;
+        box_compare.y = 150;
+        eCommerceScene_compare.addChild(box_compare);
+        let questionTexture = TextureCache['{% static "assets/img/study_compare/question.png" %}'];
+        question_compare = new Sprite(questionTexture);
+        question_compare.scale.set(0.35, 0.35);
+        question_compare.x = 365;
+        question_compare.y = 370;
+        eCommerceScene_compare.addChild(question_compare);
+        endText = new PIXI.Text("你的得分：", style_compare);
+        endText.x = 350;
+        endText.y = 250;
+        eCommerceScene_compare.addChild(endText);
+
+        again = new Graphics();
+        again.lineStyle(4, 0x99CCFF, 1);
+        again.beginFill(0x66CCFF);
+        again.drawRoundedRect(0, 0, 300, 50, 10)
+        again.endFill();
+        again.x = 250;
+        again.y = 310;
+        eCommerceScene_compare.addChild(again);
+        againText = new PIXI.Text("重新开始", style_compare);
+        againText.x = 330;
+        againText.y = 315;
+        eCommerceScene_compare.addChild(againText);
+        again.interactive = true;
+        again.buttonMode = true;
+        again.on('pointerdown', restart);
+
+
+        sad_compare_buy.visible = false;
+        sad_compare_sell.visible = false;
+        smile_compare_buy.visible = false;
+        smile_compare_sell.visible = false;
+        question_compare.visible = false;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        //app.ticker
+        //app.ticker.add(delta => gameLoop(delta));
+    }
+
+    function learnClick1() {
+        compare_mode = 1;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        beginScene_compare.visible = false;
+        eCommerceScene_compare.visible = true;
+        state = play;
+        if(hasTicker === false){
+            app.ticker.add(delta => gameLoop(delta));
+            hasTicker = true;
+        }
+
+    }
+    function learnClick2() {
+        compare_mode = 2;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        beginScene_compare.visible = false;
+        eCommerceScene_compare.visible = true;
+        state = play;
+        if(hasTicker === false){
+            app.ticker.add(delta => gameLoop(delta));
+            hasTicker = true;
+        }
+    }
+    function learnClick3() {
+        compare_mode = 3;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        paid = false;
+        beginScene_compare.visible = false;
+        eCommerceScene_compare.visible = true;
+        state = play;
+        if(hasTicker === false){
+            app.ticker.add(delta => gameLoop(delta));
+            hasTicker = true;
+        }
+    }
+    function gameLoop(delta){
+
+        //Update the current game state:
+        state(delta);
+    }
+    function play(delta) {
+        if (compare_mode === 1) {
+            money_compare.x -= 1.5;
+            money_compare.y += 1.5;
+            if (money_compare.x === pay_compare.x) {
+                money_compare.visible = false;
+                question_compare.visible = true;
+                face_compare_buy.visible = false;
+                face_compare_sell.visible = false;
+                sad_compare_sell.visible = true;
+                sad_compare_buy.visible = true;
+                endText.text = '答错了，境内第三方支付无法完成报关等工作。';
+                endText.x = 50;
+                state = gameEnd;
+            }
+        } else if (compare_mode === 2) {
+            money_compare.x -= 0.5;
+            if (money_compare.x === 500) {
+                face_compare_buy.visible = false;
+                face_compare_sell.visible = false;
+                sad_compare_sell.visible = true;
+                sad_compare_buy.visible = true;
+                endText.text = '答错了，电汇流程较复杂，耗费时间长。';
+                endText.x = 75;
+                state = gameEnd;
+            }
+
+        } else if (compare_mode === 3) {
+            if(paid === false){
+                money_compare.x -= 1.5;
+                money_compare.y += 1.5;
+                if(money_compare.x === pay_compare.x){
+                    paid = true;
+                    money_compare.visible = false;
+                }
+            }
+            else{
+                if (box_compare.x === 650) {
+                    money_compare.visible = true;
+                    if (money_compare.x === 50) {
+                        face_compare_buy.visible = false;
+                        face_compare_sell.visible = false;
+                        smile_compare_sell.visible = true;
+                        smile_compare_buy.visible = true;
+                        endText.text = '答对了,第三方跨境支付能够报关，且速度较快。';
+                        endText.x = 45;
+                        state = gameEnd;
+                    } else {
+                        money_compare.x -= 1.5;
+                        money_compare.y -= 1.5;
+                    }
+                }
+                else box_compare.x += 3;
+            }
+
+        }
+    }
+    function gameEnd() {
+        endText.visible = true;
+        again.visible = true;
+        againText.visible = true;
+    }
+
+    function restart() {
+        eCommerceScene_compare.visible = false;
+        beginScene_compare.visible = true;
+        compare_mode = 0;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        sad_compare_buy.visible = false;
+        sad_compare_sell.visible = false;
+        smile_compare_buy.visible = false;
+        smile_compare_sell.visible = false;
+        face_compare_sell.visible = true;
+        face_compare_buy.visible = true;
+        money_compare.x = 650;
+        money_compare.y = 150;
+        money_compare.visible = true;
+        box_compare.x = 50;
+        box_compare.y = 150;
+        question_compare.visible = false;
+
+    }
+
+  </script>
+</html>

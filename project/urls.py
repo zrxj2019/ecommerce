@@ -47,7 +47,8 @@ urlpatterns = [
     path('student/test/view_test/save_test/', views.save_test_student),
     path('student/test/view_test/reset_duration/', views.reset_duration_student),
     path('student/get_new_notifications/', views.get_new_notification_student),
-    path('student/study/compare_pay/', views.study_compare_pay),
+    path('student/study/compare_pay1/', views.study_compare_pay1),
+    path('student/study/compare_law/', views.study_compare_law),
     path('student/study/pay/', views.study_pay),
     # 在各种界面获取新通知
     path('student/test/get_new_notifications/', views.get_new_notification_student),

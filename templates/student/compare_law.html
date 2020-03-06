@@ -1,0 +1,400 @@
+<!-- 
+=========================================================
+ Light Bootstrap Dashboard - v2.0.1
+=========================================================
+
+ Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard
+ Copyright 2019 Creative Tim (https://www.creative-tim.com)
+ Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE)
+
+ Coded by Creative Tim
+
+=========================================================
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 echarts.js -->
+    <script src='{% static "assets/js/plugins/echarts.js" %}'></script>
+    <script src='{% static "assets/js/plugins/macarons.js" %}'></script>
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "assets/img/apple-icon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>跨境电子商务教学平台-学生</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "assets/css/light-bootstrap-dashboard.css" %} " rel="stylesheet" />
+</head>
+
+<body>
+    <div class="wrapper">
+        {% include "student/sidebar_student.html"%}
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="user/"> 欢迎，{{ data }} </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+                        <ul class="navbar-nav ml-auto">
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="notification">4</span>
+                                    <span class="no-icon">新消息提醒</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">提醒1</a>
+                                    <a class="dropdown-item" href="#">提醒2</a>
+                                    <a class="dropdown-item" href="#">提醒3</a>
+                                    <a class="dropdown-item" href="#">提醒4</a>
+                                    <div class="divider"></div>
+                                    <a class="dropdown-item" href="#">清除未读</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">
+                                    <span class="no-icon">登出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h2 class="card-title" style="text-align: center">法律、道德税收问题对比</h2>
+                                    <p class="card-category" style="text-align: center">传统电商VS跨境电商</p>
+                                </div>
+                                <div class="card-body ">
+                                    <div id = "addpixi" style="width:800px;margin:0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<!--   Core JS Files   -->
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/bootstrap.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static "assets/js/plugins/bootstrap-switch.js" %}"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static "assets/js/plugins/chartist.min.js" %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static "assets/js/plugins/bootstrap-notify.js" %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static "assets/js/light-bootstrap-dashboard.js" %} " type="text/javascript"></script>
+<script src="{% static "assets/js/demo.js" %}"></script>
+<script type="text/javascript">
+    function showNotification(message,from, align) {
+        $.notify({
+            icon: "nc-icon nc-app",
+            message: message
+
+        }, {
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+        {#demo.showNotification();#}
+
+    });
+</script>
+<script src='{% static "assets/js/plugins/pixi.min.js" %}'></script>
+<script type="text/javascript">
+    function showNotification(message,from, align) {
+        $.notify({
+            icon: "nc-icon nc-app",
+            message: message
+
+        }, {
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+        {#demo.showNotification();#}
+
+    });
+</script>
+<script type="text/javascript">
+    //Aliases
+let Application = PIXI.Application,
+    Container = PIXI.Container,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    TextureCache = PIXI.utils.TextureCache,
+    Sprite = PIXI.Sprite,
+    Rectangle = PIXI.Rectangle;
+    Graphics = PIXI.Graphics;
+
+    //Create a Pixi Application
+let app_law = new Application({
+    width: 800,
+    height: 600,
+    antialiasing: true,
+    transparent: false,
+    resolution: 1
+  }
+);
+
+    //Add the canvas that Pixi automatically created for you to the HTML document
+    document.getElementById("addpixi").appendChild(app_law.view);
+
+
+    //load an image and run the `setup` function when it's done
+    loader
+      .add([
+          '{% static "assets/img/study_compare/map.jpg" %}',
+          '{% static "assets/img/study_compare/box.png" %}',
+          '{% static "assets/img/study_compare/face.png" %}',
+          '{% static "assets/img/study_compare/pay.png" %}',
+          '{% static "assets/img/study_compare/sad.png" %}',
+          '{% static "assets/img/study_compare/smile.png" %}',
+          '{% static "assets/img/study_compare/time.png" %}',
+          '{% static "assets/img/study_compare/money.png" %}',
+          '{% static "assets/img/study_compare/question.png" %}'
+      ])
+      .load(setup_law);
+    let background_law, beginScene_law, eCommerceScene_law, smile_law_buy, face_law_buy,
+    sad_law_buy, smile_law_sell, face_law_sell, sad_law_sell, law_mode, title_law,
+    law_option1, law_option2, endText, again, againText;
+    //This `setup` function will run when the image has loaded
+    function setup_law() {
+        beginScene_law = new Container();
+        app_law.stage.addChild(beginScene_law);
+        law_mode = 0;
+        //beginScene_law.visible = false;
+
+        let backgroundTexture = TextureCache['{% static "assets/img/study_compare/map.jpg" %}'];
+        background_law = new Sprite(backgroundTexture);
+        background_law.scale.set(2, 2);
+        background_law.y = 50;
+        beginScene_law.addChild(background_law);
+
+        let roundBox1 = new Graphics();
+        roundBox1.lineStyle(4, 0x99CCFF, 1);
+        roundBox1.beginFill(0x66CCFF);
+        roundBox1.drawRoundedRect(0, 0, 600, 600/5, 10)
+        roundBox1.endFill();
+        roundBox1.x = 100;
+        roundBox1.y = 600/5 + 20;
+        beginScene_law.addChild(roundBox1);
+
+        let roundBox2 = new Graphics();
+        roundBox2.lineStyle(4, 0x99CCFF, 1);
+        roundBox2.beginFill(0x66CCFF);
+        roundBox2.drawRoundedRect(0, 0, 600, 600/5, 10)
+        roundBox2.endFill();
+        roundBox2.x = 100;
+        roundBox2.y = 1800/5 + 20;
+        beginScene_law.addChild(roundBox2);
+
+
+        roundBox1.interactive = true;
+        roundBox2.interactive = true;
+        roundBox1.buttonMode = true;
+        roundBox2.buttonMode = true;
+
+        roundBox1.on('pointerdown', learnClick1);
+        roundBox2.on('pointerdown', learnClick2);
+
+
+        let style_law = new PIXI.TextStyle({
+          fontFamily: "Arial",
+          fontSize: 36,
+          fill: "white"
+        });
+        title_law = new PIXI.Text("向国外用户推广产品，应该如何推广", style_law);
+        title_law.x = 110;
+        title_law.y = 20;
+        beginScene_law.addChild(title_law);
+        law_option1 = new PIXI.Text("借鉴国内成功方案", style_law);
+        law_option1.x = 265;
+        law_option1.y = 180;
+        beginScene_law.addChild(law_option1);
+        law_option2 = new PIXI.Text("依据当地风俗制定新方案", style_law);
+        law_option2.x = 205;
+        law_option2.y = 180 + 1200/5;
+        beginScene_law.addChild(law_option2);
+
+
+        eCommerceScene_law = new Container();
+        app_law.stage.addChild(eCommerceScene_law);
+        eCommerceScene_law.visible = false;
+        let smileTexture_buy = TextureCache['{% static "assets/img/study_compare/smile.png" %}'];
+        smile_law_buy = new Sprite(smileTexture_buy);
+        smile_law_buy.scale.set(0.5, 0.5);
+        smile_law_buy.x = 50;
+        smile_law_buy.y = 50;
+        eCommerceScene_law.addChild(smile_law_buy);
+        let faceTexture_buy = TextureCache['{% static "assets/img/study_compare/face.png" %}'];
+        face_law_buy = new Sprite(faceTexture_buy);
+        face_law_buy.scale.set(0.5, 0.5);
+        face_law_buy.x = 50;
+        face_law_buy.y = 50;
+        eCommerceScene_law.addChild(face_law_buy);
+        let sadTexture_buy = TextureCache['{% static "assets/img/study_compare/sad.png" %}'];
+        sad_law_buy = new Sprite(sadTexture_buy);
+        sad_law_buy.scale.set(0.5, 0.5);
+        sad_law_buy.x = 50;
+        sad_law_buy.y = 50;
+        eCommerceScene_law.addChild(sad_law_buy);
+        let smileTexture_sell = TextureCache['{% static "assets/img/study_compare/smile.png" %}'];
+        smile_law_sell = new Sprite(smileTexture_sell);
+        smile_law_sell.scale.set(0.5, 0.5);
+        smile_law_sell.x = 650;
+        smile_law_sell.y = 50;
+        eCommerceScene_law.addChild(smile_law_sell);
+        let faceTexture_sell = TextureCache['{% static "assets/img/study_compare/face.png" %}'];
+        face_law_sell = new Sprite(faceTexture_sell);
+        face_law_sell.scale.set(0.5, 0.5);
+        face_law_sell.x = 650;
+        face_law_sell.y = 50;
+        eCommerceScene_law.addChild(face_law_sell);
+        let sadTexture_sell = TextureCache['{% static "assets/img/study_compare/sad.png" %}'];
+        sad_law_sell = new Sprite(sadTexture_sell);
+        sad_law_sell.scale.set(0.5, 0.5);
+        sad_law_sell.x = 650;
+        sad_law_sell.y = 50;
+        eCommerceScene_law.addChild(sad_law_sell);
+        let moneyTexture = TextureCache['{% static "assets/img/study_compare/money.png" %}'];
+        let money_law = new Sprite(moneyTexture);
+        money_law.scale.set(0.25, 0.25);
+        money_law.x = 650;
+        money_law.y = 150;
+        eCommerceScene_law.addChild(money_law);
+        let boxTexture = TextureCache['{% static "assets/img/study_compare/box.png" %}'];
+        let box_law = new Sprite(boxTexture);
+        box_law.scale.set(0.25, 0.25);
+        box_law.x = 50;
+        box_law.y = 150;
+        eCommerceScene_law.addChild(box_law);
+
+
+        endText = new PIXI.Text("你的得分：", style_law);
+        endText.x = 350;
+        endText.y = 250;
+        eCommerceScene_law.addChild(endText);
+
+        again = new Graphics();
+        again.lineStyle(4, 0x99CCFF, 1);
+        again.beginFill(0x66CCFF);
+        again.drawRoundedRect(0, 0, 300, 50, 10)
+        again.endFill();
+        again.x = 250;
+        again.y = 310;
+        eCommerceScene_law.addChild(again);
+        againText = new PIXI.Text("重新开始", style_law);
+        againText.x = 330;
+        againText.y = 315;
+        eCommerceScene_law.addChild(againText);
+        again.interactive = true;
+        again.buttonMode = true;
+        again.on('pointerdown', restart);
+
+
+        sad_law_buy.visible = false;
+        sad_law_sell.visible = false;
+        smile_law_buy.visible = false;
+        smile_law_sell.visible = false;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+
+    }
+
+    function learnClick1() {
+        law_mode = 1;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        beginScene_law.visible = false;
+        eCommerceScene_law.visible = true;
+        face_law_buy.visible = true;
+        face_law_sell.visible = false;
+        sad_law_buy.visible = false;
+        sad_law_sell.visible = true;
+        endText.text = '根据国内的成功案例进行选品营销，\n但国外的消费者似乎不感兴趣。';
+        endText.x = 90;
+        endText.visible = true;
+        again.y = 340;
+        againText.y = 345;
+        again.visible = true;
+        againText.visible = true;
+
+    }
+    function learnClick2() {
+        law_mode = 2;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        beginScene_law.visible = false;
+        eCommerceScene_law.visible = true;
+        face_law_buy.visible = false;
+        face_law_sell.visible = false;
+        smile_law_sell.visible = true;
+        smile_law_buy.visible = true;
+        endText.text = '因地制宜，智能化的选品营销博得了消费者的喜爱';
+        endText.x = 5;
+        endText.visible = true;
+        again.visible = true;
+        againText.visible = true;
+    }
+
+
+    function restart() {
+        eCommerceScene_law.visible = false;
+        beginScene_law.visible = true;
+        law_mode = 0;
+        endText.visible = false;
+        againText.visible = false;
+        again.visible = false;
+        sad_law_buy.visible = false;
+        sad_law_sell.visible = false;
+        smile_law_buy.visible = false;
+        smile_law_sell.visible = false;
+        face_law_sell.visible = true;
+        face_law_buy.visible = true;
+
+
+    }
+
+  </script>
+</html>

@@ -204,9 +204,21 @@ def get_new_notification_student(request):
 
 @csrf_exempt
 def study_compare_pay(request):
-    studentid = request.session.get('userid')
+    #studentid = request.session.get('userid')
 
-    return render(request, 'student/compare_pay.html', {'data': request.session.get('username')})
+    return render(request, 'student/compare_pay.html', {'data': request.session.get('username')})\
+
+@csrf_exempt
+def study_compare_pay1(request):
+    #studentid = request.session.get('userid')
+
+    return render(request, 'student/compare_pay1.html', {'data': request.session.get('username')})
+
+@csrf_exempt
+def study_compare_law(request):
+    #studentid = request.session.get('userid')
+
+    return render(request, 'student/compare_law.html', {'data': request.session.get('username')})
 
 @csrf_exempt
 def study_pay(request):
