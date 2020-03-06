@@ -484,6 +484,12 @@ def end_test_teacher(request):
 
 ############################在线学习##################################
 
+############################pixi测试##################################
+def pay_pixi_test(request):
+    loginValidator(request)
+    return render(request,'student/paytech.html',{'username':request.session.get('username')})
+############################pixi测试##################################
+
 
 
 

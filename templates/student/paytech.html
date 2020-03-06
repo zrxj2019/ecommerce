@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入 echarts.js -->
+    <script src='{% static "assets/js/plugins/echarts.js" %}'></script>
+    <script src='{% static "assets/js/plugins/macarons.js" %}'></script>
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "assets/img/apple-icon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>跨境电子商务教学平台-学生</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "assets/css/light-bootstrap-dashboard.css" %} " rel="stylesheet" />
+    <style type="text/css">
+    </style>
+
+
+</head>
+<script src="{% static "pixi/pixi.min.js" %}"></script>
+<body>
+    <div class="wrapper">
+        {% include "student/sidebar_student.html"%}
+        <div class="main-panel">
+            {% include "student/navbar.html"%}
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card strpied-tabled-with-hover">
+                                <div class="card-body">
+                                        <div class="col-md-12" style="height: 500px;display: block" id="choose_pay">
+                                        <div style="text-align: center;font-size: 30px;padding-top: 50px">请选择一种支付技术</div>
+                                        <div style="text-align: center;padding-top: 50px">
+                                            <button class="btn btn-primary" id="xyk_pay" onclick="choosePay('xyk')">信用卡组织</button>
+                                        </div>
+                                        <div style="text-align: center;padding-top: 30px">
+                                            <button class="btn btn-primary" id="pp_pay" onclick="choosePay('pp')">PayPal</button>
+                                        </div>
+                                        <div style="text-align: center;padding-top: 30px">
+                                            <button class="btn btn-primary" id="zfb_pay" onclick="choosePay('zfb')">国际支付宝</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="height: 500px;display: none" id="knowledge_point" >
+                                         <div style="text-align: center;padding-top: 50px">
+                                             <div style="margin: 0 auto ;width:600px;height:400px;background: url({% static "images/heiban.jpeg" %}) center center no-repeat;background-size: cover" >
+                                                 <div style="padding-top: 30px;font-size: 30px;" id="point_name"></div>
+                                                 <div style="text-align:left;padding-left: 50px;padding-right: 50px;font-size: 20px" id="point_content"></div>
+                                                 <div style="padding-bottom: 30px">
+                                                     <button type="button" class="btn btn-primary" onclick="pixiStart()" id="csbtn">我知道了！开始测试</button>
+                                                     <button class="btn btn-info" onclick="returnChoosePay()">返回</button>
+                                                 </div>
+
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2" id="icons" style="display: block">
+                                            <h4 class="card-title" id="pay_point"></h4>
+                                            <h5 class="card-title" style="padding-top: 20px">请按序还原本支付技术的支付流程</h5>
+                                            <h5 class="card-title" style="padding-top: 20px">本流程元素有：</h5>
+                                            <h5 class="card-title" id="pay_element"></h5>
+                                            <div style="padding-top: 30px">
+                                                <button class="btn btn-info" onclick="returnChoosePay()">返回</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10" id="canvas" style="text-align: center;display: none;">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!--   Core JS Files   -->
+<script src="{% static "assets/js/core/jquery.3.2.1.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/js/core/bootstrap.min.js" %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static "assets/js/plugins/bootstrap-switch.js" %}"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static "assets/js/plugins/chartist.min.js" %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static "assets/js/plugins/bootstrap-notify.js" %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static "assets/js/light-bootstrap-dashboard.js" %} " type="text/javascript"></script>
+<script src="{% static "assets/js/demo.js" %}"></script>
+<script type="text/javascript">
+
+    function choosePay(paystr){
+        document.getElementById('choose_pay').style.display='none';
+        document.getElementById('knowledge_point').style.display='block';
+        if (paystr==='xyk'){
+            $('#point_name').html('信用卡支付技术');
+            $('#point_content').html('VISA/Master等国际信用卡是全球拥发卡量超过20亿张，潜在客户群体庞大。商家直接让第三方支付平台安装一个网关接口到自己的网站上面，国外买家在网站上面订购产品可直接在线下单，在线用信用卡支付这笔订单款项，安全快捷。');
+        }
+        else if (paystr==='pp'){
+            $('#point_name').html('PayPal支付技术');
+            $('#point_content').html('集全球流行的各种信用卡、借记卡、电子支票于一身，不采用传统的邮寄支票或汇票方式，而采用电子邮件为用户身份标志来转移资金。\n' +
+                '       当有人通过PayPal付款的时候，卖家会收到PayPal发来提醒邮件，对于中国用户来说，第一笔收款需要到PayPal 网站上进行手动确认接受，以便寄来的款项记入用户的PayPal 账户。\n');
+        }
+        else{
+            $('#point_name').html('国际支付宝支付技术');
+            $('#point_content').html('  国际支付宝（Escrow）的服务模式与国内支付宝类似，如图所示。交易过程中先由买家将货款打到第三方担保平台的国际支付宝（Escrow）账户中，然后第三方担保平台通知卖家发货，买家收到商品后确认，货款放于卖家，至此完成一笔网络交易。\n');
+        }
+        document.getElementById('csbtn').value=paystr;
+    }
+
+    function returnChoosePay() {
+        window.location.reload();
+    }
+
+    let app,
+        Application = PIXI.Application,
+        Graphics = PIXI.Graphics,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        Sprite = PIXI.Sprite;
+        //Create a Pixi Application
+
+    function pixiStart(){
+        document.getElementById('choose_pay').style.display = 'none';
+        document.getElementById('knowledge_point').style.display = 'none';
+        document.getElementById('icons').style.display = 'block';
+        document.getElementById('canvas').style.display = 'block';
+        var paystr=document.getElementById('csbtn').value;
+        app = new Application({
+            width: 800,         // default: 800
+            height: 500 ,       // default: 600
+            antialias: false,    // default: false
+            transparent: true, // default: false
+            resolution: 1,       // default: 1
+            {#backgroundColor: 0x1d9ce0#}
+        });
+        document.getElementById('canvas').appendChild(app.view);
+        if (paystr==='xyk'){
+            $('#pay_point').html('信用卡支付技术');
+            $('#pay_element').html('买家、卖家、网站、银行、网关、金钱、订单、浏览');
+            loader.add("{% static "images/payment.json" %}" ).load(xyksetup);
+        }
+        else if (paystr==='pp'){
+            $('#pay_point').html('PayPal支付技术');
+            $('#pay_element').html('买家、卖家、网站、PayPal、金钱、订单、浏览、邮件');
+            loader.add("{% static "images/payment.json" %}" ).load(ppsetup);
+        }
+        else{
+            $('#pay_point').html('国际支付宝支付技术');
+            $('#pay_element').html('买家、卖家、网站、国际支付宝、金钱、订单、浏览、商品');
+            loader.add("{% static "images/payment.json" %}" ).load(zfbsetup);
+        }
+    }
+
+    function xyksetup() {
+        let ditu,maijia1,maijia2,yinhang,liulan,wangzhan,wangguan,dingdan,qian;
+        let id = resources["{% static "images/payment.json" %}"].textures;
+        //固定精灵
+        ditu = new Sprite(id["ditu.jpg"]);
+        ditu.width=800;
+        ditu.height=500;
+        app.stage.addChild(ditu);
+        maijia1 = new Sprite(id["maijia1.png"]);
+        maijia1.width=50;
+        maijia1.height=50;
+        maijia1.x=430;
+        maijia1.y=100;
+        app.stage.addChild(maijia1);
+        maijia2 = new Sprite(id["maijia2.png"]);
+        maijia2.width=40;
+        maijia2.height=40;
+        maijia2.x=640;
+        maijia2.y=170;
+        app.stage.addChild(maijia2);
+        wangzhan = new Sprite(id["wangzhan.png"]);
+        wangzhan.width=40;
+        wangzhan.height=40;
+        wangzhan.x=250;
+        wangzhan.y=200;
+        app.stage.addChild(wangzhan);
+        yinhang = new Sprite(id["yinhang.png"]);
+        yinhang.width=37;
+        yinhang.height=37;
+        yinhang.x=100;
+        yinhang.y=100;
+        app.stage.addChild(yinhang);
+
+        //移动精灵
+        //浏览
+        liulan = new Sprite(id["liulan.png"]);
+        liulan.width=35;
+        liulan.height=35;
+        liulan.buttonMode = true;
+        liulan.interactive = true;
+        liulan.anchor.set(0.5);
+        liulan.position.set(430,110);
+        liulan.on('pointerdown', onDragStart)
+            .on('pointerup', onDragEnd)
+            .on('pointerupoutside', onDragEnd)
+            .on('pointermove', onDragMove);
+        app.stage.addChild(liulan);
+        app.ticker.add(delta => xyk_checkLiulan(delta));
+
+        //网关
+        wangguan = new Sprite(id["wangguan.png"]);
+        wangguan.width=35;
+        wangguan.height=35;
+        wangguan.anchor.set(0.5);
+        wangguan.position.set(150,130);
+        app.stage.addChild(wangguan);
+
+        //订单
+        dingdan = new Sprite(id["dingdan.jpeg"]);
+        dingdan.width=35;
+        dingdan.height=35;
+        dingdan.anchor.set(0.5);
+        dingdan.position.set(480,140);
+        app.stage.addChild(dingdan);
+
+        //钱
+        qian = new Sprite(id["qian.png"]);
+        qian.width=35;
+        qian.height=35;
+        qian.anchor.set(0.5);
+        qian.position.set(470,100);
+        app.stage.addChild(qian);
+
+        function xyk_checkLiulan(delta){
+        if(hitTestRectangle(liulan,wangzhan)){
+            let line = new Graphics();
+            line.lineStyle(2, 0xFFFF00, 1);
+            line.moveTo(450, 120);
+            line.lineTo(270, 220);
+            app.stage.addChild(line);
+            liulan.position.set(360,150);
+            liulan.buttonMode = false;
+            liulan.interactive = false;
+            wangguan.buttonMode = true;
+            wangguan.interactive = true;
+            wangguan.on('pointerdown', onDragStart)
+                .on('pointerup', onDragEnd)
+                .on('pointerupoutside', onDragEnd)
+                .on('pointermove', onDragMove);
+            app.ticker.add(delta => xyk_checkWangguan(delta));
+
+        }
+    }
+
+        function xyk_checkWangguan(delta){
+        if(hitTestRectangle(wangguan,wangzhan)){
+            let line = new Graphics();
+            line.lineStyle(2, 0xFF3300, 1);
+            line.moveTo(120, 120);
+            line.lineTo(270, 220);
+            app.stage.addChild(line);
+            wangguan.position.set(270,180);
+            wangguan.buttonMode = false;
+            wangguan.interactive = false;
+            dingdan.buttonMode = true;
+            dingdan.interactive = true;
+            dingdan.on('pointerdown', onDragStart)
+                .on('pointerup', onDragEnd)
+                .on('pointerupoutside', onDragEnd)
+                .on('pointermove', onDragMove);
+            app.ticker.add(delta => xyk_checkDingdan(delta));
+        }
+    }
+
+        function  xyk_checkDingdan(delta) {
+        if(hitTestRectangle(dingdan,wangzhan)) {
+            let line = new Graphics();
+            line.lineStyle(2, 0x9966FF, 1);
+            line.moveTo(455, 125);
+            line.lineTo(275, 225);
+            app.stage.addChild(line);
+        }else if(!hitTestRectangle(dingdan,wangzhan) && hitTestRectangle(dingdan,maijia2)){
+            let line2 = new Graphics();
+            line2.lineStyle(2, 0x9966FF, 1);
+            line2.moveTo(275, 225);
+            line2.lineTo(660,190);
+            app.stage.addChild(line2);
+            dingdan.position.set(632,190);
+            dingdan.buttonMode = false;
+            dingdan.interactive = false;
+            qian.buttonMode = true;
+            qian.interactive = true;
+            qian.on('pointerdown', onDragStart)
+                .on('pointerup', onDragEnd)
+                .on('pointerupoutside', onDragEnd)
+                .on('pointermove', onDragMove);
+            app.ticker.add(delta => xyk_checkQian(delta));
+        }
+    }
+
+        function  xyk_checkQian(delta) {
+        if(hitTestRectangle(qian,maijia2)){
+            let line = new Graphics();
+            line.lineStyle(2, 0xFF9933, 1);
+            line.moveTo(450, 120);
+            line.lineTo(660,190);
+            app.stage.addChild(line);
+            qian.position.set(680,170);
+            qian.buttonMode = false;
+            qian.interactive = false;
+        }
+    }
+    };
+
+    function ppsetup() {
+        let ditu,maijia1,maijia2,paypal,liulan,wangzhan,youjian,dingdan,qian;
+        let id = resources["{% static "images/payment.json" %}"].textures;
+        //固定精灵
+        ditu = new Sprite(id["ditu.jpg"]);
+        ditu.width=800;
+        ditu.height=500;
+        app.stage.addChild(ditu);
+        maijia1 = new Sprite(id["maijia1.png"]);
+        maijia1.width=50;
+        maijia1.height=50;
+        maijia1.x=430;
+        maijia1.y=100;
+        app.stage.addChild(maijia1);
+        maijia2 = new Sprite(id["maijia2.png"]);
+        maijia2.width=40;
+        maijia2.height=40;
+        maijia2.x=640;
+        maijia2.y=170;
+        app.stage.addChild(maijia2);
+        wangzhan = new Sprite(id["wangzhan.png"]);
+        wangzhan.width=40;
+        wangzhan.height=40;
+        wangzhan.x=250;
+        wangzhan.y=200;
+        app.stage.addChild(wangzhan);
+        paypal = new Sprite(id["Paypal.png"]);
+        paypal.width=37;
+        paypal.height=37;
+        paypal.x=120;
+        paypal.y=140;
+        app.stage.addChild(paypal);
+
+        //移动精灵
+        //浏览
+        liulan = new Sprite(id["liulan.png"]);
+        liulan.width=35;
+        liulan.height=35;
+        liulan.buttonMode = true;
+        liulan.interactive = true;
+        liulan.anchor.set(0.5);
+        liulan.position.set(430,110);
+        liulan.on('pointerdown', onDragStart)
+            .on('pointerup', onDragEnd)
+            .on('pointerupoutside', onDragEnd)
+            .on('pointermove', onDragMove);
+        app.stage.addChild(liulan);
+        app.ticker.add(delta => pp_checkLiulan(delta));
+
+        //邮件
+        youjian = new Sprite(id["youjian.png"]);
+        youjian.width=35;
+        youjian.height=35;
+        youjian.anchor.set(0.5);
+        youjian.position.set(170,140);
+        app.stage.addChild(youjian);
+
+        //订单
+        dingdan = new Sprite(id["dingdan.jpeg"]);
+        dingdan.width=35;
+        dingdan.height=35;
+        dingdan.anchor.set(0.5);
+        dingdan.position.set(480,140);
+        app.stage.addChild(dingdan);
+
+        //钱
+        qian = new Sprite(id["qian.png"]);
+        qian.width=35;
+        qian.height=35;
+        qian.anchor.set(0.5);
+        qian.position.set(470,100);
+        app.stage.addChild(qian);
+
+        function pp_checkLiulan(delta){
+            if(hitTestRectangle(liulan,wangzhan)){
+                let line = new Graphics();
+                line.lineStyle(2, 0xFFFF00, 1);
+                line.moveTo(450, 120);
+                line.lineTo(270, 220);
+                app.stage.addChild(line);
+                liulan.position.set(360,150);
+                liulan.buttonMode = false;
+                liulan.interactive = false;
+                dingdan.buttonMode = true;
+                dingdan.interactive = true;
+                dingdan.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => pp_checkDingdan(delta));
+
+            }
+        }
+
+        function  pp_checkDingdan(delta) {
+            if(hitTestRectangle(dingdan,wangzhan)) {
+                let line = new Graphics();
+                line.lineStyle(2, 0x9966FF, 1);
+                line.moveTo(455, 125);
+                line.lineTo(275, 225);
+                app.stage.addChild(line);
+            }else if(!hitTestRectangle(dingdan,wangzhan) && hitTestRectangle(dingdan,maijia2)){
+                let line2 = new Graphics();
+                line2.lineStyle(2, 0x9966FF, 1);
+                line2.moveTo(275, 225);
+                line2.lineTo(660,190);
+                app.stage.addChild(line2);
+                dingdan.position.set(632,190);
+                dingdan.buttonMode = false;
+                dingdan.interactive = false;
+                youjian.buttonMode = true;
+                youjian.interactive = true;
+                youjian.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => pp_checkYoujian(delta));
+            }
+        }
+
+        function pp_checkYoujian(delta) {
+            if (hitTestRectangle(youjian, maijia2)) {
+                let line = new Graphics();
+                line.lineStyle(2, 0xFF3300, 1);
+                line.moveTo(140, 160);
+                line.lineTo(660,190);
+                app.stage.addChild(line);
+                youjian.position.set(690,200);
+                youjian.buttonMode = false;
+                youjian.interactive = false;
+                qian.buttonMode = true;
+                qian.interactive = true;
+                qian.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => pp_checkQian(delta));
+
+            }
+        }
+
+        function  pp_checkQian(delta) {
+        if(hitTestRectangle(qian,maijia2)){
+            let line = new Graphics();
+            line.lineStyle(2, 0xFF9933, 1);
+            line.moveTo(450, 120);
+            line.lineTo(660,190);
+            app.stage.addChild(line);
+            qian.position.set(670,160);
+            qian.buttonMode = false;
+            qian.interactive = false;
+        }
+    }
+    };
+
+    function zfbsetup() {
+        let ditu,maijia1,maijia2,zhifubao,liulan,wangzhan,shangpin,dingdan,qian;
+        let id = resources["{% static "images/payment.json" %}"].textures;
+        //固定精灵
+        ditu = new Sprite(id["ditu.jpg"]);
+        ditu.width=800;
+        ditu.height=500;
+        app.stage.addChild(ditu);
+        maijia1 = new Sprite(id["maijia1.png"]);
+        maijia1.width=50;
+        maijia1.height=50;
+        maijia1.x=430;
+        maijia1.y=100;
+        app.stage.addChild(maijia1);
+        maijia2 = new Sprite(id["maijia2.png"]);
+        maijia2.width=40;
+        maijia2.height=40;
+        maijia2.x=640;
+        maijia2.y=170;
+        app.stage.addChild(maijia2);
+        wangzhan = new Sprite(id["wangzhan.png"]);
+        wangzhan.width=40;
+        wangzhan.height=40;
+        wangzhan.x=250;
+        wangzhan.y=200;
+        app.stage.addChild(wangzhan);
+        zhifubao = new Sprite(id["zhifubao.png"]);
+        zhifubao.width=37;
+        zhifubao.height=37;
+        zhifubao.x=120;
+        zhifubao.y=140;
+        app.stage.addChild(zhifubao);
+
+        //移动精灵
+        //浏览
+        liulan = new Sprite(id["liulan.png"]);
+        liulan.width=35;
+        liulan.height=35;
+        liulan.buttonMode = true;
+        liulan.interactive = true;
+        liulan.anchor.set(0.5);
+        liulan.position.set(430,110);
+        liulan.on('pointerdown', onDragStart)
+            .on('pointerup', onDragEnd)
+            .on('pointerupoutside', onDragEnd)
+            .on('pointermove', onDragMove);
+        app.stage.addChild(liulan);
+        app.ticker.add(delta => zfb_checkLiulan(delta));
+
+        //商品
+        shangpin = new Sprite(id["shangping.png"]);
+        shangpin.width=35;
+        shangpin.height=35;
+        shangpin.anchor.set(0.5);
+        shangpin.position.set(670,160);
+        app.stage.addChild(shangpin);
+
+        //订单
+        dingdan = new Sprite(id["dingdan.jpeg"]);
+        dingdan.width=35;
+        dingdan.height=35;
+        dingdan.anchor.set(0.5);
+        dingdan.position.set(480,140);
+        app.stage.addChild(dingdan);
+
+        //钱
+        qian = new Sprite(id["qian.png"]);
+        qian.width=35;
+        qian.height=35;
+        qian.anchor.set(0.5);
+        qian.position.set(470,100);
+        app.stage.addChild(qian);
+
+        function zfb_checkLiulan(delta){
+            if(hitTestRectangle(liulan,wangzhan)){
+                let line = new Graphics();
+                line.lineStyle(2, 0xFFFF00, 1);
+                line.moveTo(450, 120);
+                line.lineTo(270, 220);
+                app.stage.addChild(line);
+                liulan.position.set(360,150);
+                liulan.buttonMode = false;
+                liulan.interactive = false;
+                dingdan.buttonMode = true;
+                dingdan.interactive = true;
+                dingdan.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => zfb_checkDingdan(delta));
+
+            }
+        }
+
+        function  zfb_checkDingdan(delta) {
+            if(hitTestRectangle(dingdan,wangzhan)) {
+                let line = new Graphics();
+                line.lineStyle(2, 0x9966FF, 1);
+                line.moveTo(455, 125);
+                line.lineTo(275, 225);
+                app.stage.addChild(line);
+            }else if(!hitTestRectangle(dingdan,wangzhan) && hitTestRectangle(dingdan,maijia2)){
+                let line2 = new Graphics();
+                line2.lineStyle(2, 0x9966FF, 1);
+                line2.moveTo(275, 225);
+                line2.lineTo(660,190);
+                app.stage.addChild(line2);
+                dingdan.position.set(632,190);
+                dingdan.buttonMode = false;
+                dingdan.interactive = false;
+                qian.buttonMode = true;
+                qian.interactive = true;
+                qian.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => zfb_checkQian1(delta));
+            }
+        }
+
+        function zfb_checkShangpin(delta) {
+            if (hitTestRectangle(shangpin, maijia1)) {
+                let line = new Graphics();
+                line.lineStyle(2, 0xFF3300, 1);
+                line.moveTo(660,190);
+                line.lineTo(455,125);
+                app.stage.addChild(line);
+                shangpin.position.set(470,100);
+                shangpin.buttonMode = false;
+                shangpin.interactive = false;
+                qian.buttonMode = true;
+                qian.interactive = true;
+                qian.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => zfb_checkQian2(delta));
+
+            }
+        }
+
+        function  zfb_checkQian1(delta) {
+            if (hitTestRectangle(qian, zhifubao)) {
+                let line = new Graphics();
+                line.lineStyle(2, 0xFF9933, 1);
+                line.moveTo(450, 120);
+                line.lineTo(140, 160);
+                app.stage.addChild(line);
+                qian.position.set(170, 140);
+                qian.buttonMode = false;
+                qian.interactive = false;
+                shangpin.buttonMode = true;
+                shangpin.interactive = true;
+                shangpin.on('pointerdown', onDragStart)
+                    .on('pointerup', onDragEnd)
+                    .on('pointerupoutside', onDragEnd)
+                    .on('pointermove', onDragMove);
+                app.ticker.add(delta => zfb_checkShangpin(delta));
+            }
+        }
+
+        function  zfb_checkQian2(delta) {
+            if(hitTestRectangle(qian,maijia2)){
+                let line = new Graphics();
+                line.lineStyle(2, 0xFF9933, 1);
+                line.moveTo(140, 160);
+                line.lineTo(660,190);
+                app.stage.addChild(line);
+                qian.position.set(690,200);
+                qian.buttonMode = false;
+                qian.interactive = false
+            }
+        }
+    };
+
+
+    //共用start
+    function onDragStart(event) {
+	    this.data = event.data;
+	    this.alpha = 0.5;
+	    this.dragging = true;
+    }
+
+    function onDragEnd() {
+	    this.alpha = 1;
+	    this.dragging = false;
+	    this.data = null;
+    }
+
+    function onDragMove() {
+        if (this.dragging) {
+            var newPosition = this.data.getLocalPosition(this.parent); //获取鼠标移动的位置
+            this.position.x = newPosition.x;
+            this.position.y = newPosition.y;
+        }
+    }
+
+    function hitTestRectangle(r1, r2) {
+        //Define the variables we'll need to calculate
+         let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+        //hit will determine whether there's a collision
+        hit = false;
+        //Find the center points of each sprite
+        r1.centerX = r1.x + r1.width / 2;
+        r1.centerY = r1.y + r1.height / 2;
+        r2.centerX = r2.x + r2.width / 2;
+        r2.centerY = r2.y + r2.height / 2;
+        //Find the half-widths and half-heights of each sprite
+        r1.halfWidth = r1.width / 2;
+        r1.halfHeight = r1.height / 2;
+        r2.halfWidth = r2.width / 2;
+        r2.halfHeight = r2.height / 2;
+        //Calculate the distance vector between the sprites
+        vx = r1.centerX - r2.centerX;
+        vy = r1.centerY - r2.centerY;
+        //Figure out the combined half-widths and half-heights
+        combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+        combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+        //Check for a collision on the x axis
+        if (Math.abs(vx) < combinedHalfWidths) {
+            //A collision might be occuring. Check for a collision on the y axis
+            if (Math.abs(vy) < combinedHalfHeights) {
+            //There's definitely a collision happening
+            hit = true;
+            } else {
+            //There's no collision on the y axis
+            hit = false;
+            }
+        } else {
+            //There's no collision on the x axis
+            hit = false;
+        }
+        //`hit` will be either `true` or `false`
+        return hit;
+    };
+    //公用end
+</script>
+</html>
+
