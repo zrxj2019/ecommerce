@@ -71,7 +71,7 @@
                                 </a>
                             </div>
                             <div class="col-md-12">
-                                <a class="card "style="Background: #9988CC;height:220px;" href="/student/study/compare_pay/">
+                                <a class="card "style="Background: #9988CC;height:220px;" href="/student/onlinelearning/">
                                     <div class="card-body " style="color: #FFFFFF">
                                         <div class="typography-line">
                                         <h1 style="text-align:center">
@@ -308,8 +308,8 @@
                 }
             },
             data:[
-                {value:{{ study_progress }}, name:'已完成小节'},
-                {value:{{ total }}, name:'未完成小节'}
+                {value:{{ total }} - 1, name:'已完成小节'},
+                {value:1, name:'未完成小节'}
             ]
         }
     ]
