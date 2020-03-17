@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # user表控制登陆登出
 # 在mysql数据库中实现插入、修改、删除触发器确保user、teacher、student表的数据一致性
 from django.utils import timezone
@@ -9,10 +8,10 @@ from django.utils import timezone
 class User(models.Model):
     roleTuple = (
         (0, "teacher"),
-        (1, "student"),
+        (1, "student")
     )
     username = models.CharField(max_length=15, primary_key=True, unique=True)
-    password = models.CharField(max_length=45,default=None)
+    password = models.CharField(max_length=45, default=None)
     role = models.IntegerField(choices=roleTuple)
 
 
@@ -20,47 +19,53 @@ class User(models.Model):
 class Teacher(models.Model):
     teacherid = models.CharField(max_length=15, primary_key=True)
     teachername = models.CharField(max_length=45)
-    password = models.CharField(max_length=45,default=None)
-    department = models.CharField(max_length=45,null=True)
+    password = models.CharField(max_length=45, default=None)
+    department = models.CharField(max_length=45, null=True)
 
 
 class Student(models.Model):
     studentid = models.CharField(max_length=15, primary_key=True)
-    password = models.CharField(max_length=45,default=None)
+    password = models.CharField(max_length=45, default=None)
     studentname = models.CharField(max_length=45)
+
 
 
 # 课程实体，包括章、节、知识点、知识点的资源路径
 class Chapter(models.Model):
     chapterid = models.AutoField(primary_key=True)
-    chaptername=models.CharField(max_length=60,default=None)
+    chaptername = models.CharField(max_length=60, default=None)
     content = models.TextField(null=True)
 
 
 class Section(models.Model):
     sectionid = models.AutoField(primary_key=True)
-    sectionname=models.CharField(max_length=60,default=None)
+    sectionname = models.CharField(max_length=60, default=None)
     content = models.TextField(null=True)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     teachers = models.ManyToManyField(Teacher, through='Statistic')
+    students = models.ManyToManyField(Student, through='Progress')
+
 
 class SectionSimulation(models.Model):
-    simulationid=models.AutoField(primary_key=True)
-    simulationtype=models.IntegerField()
-    simulationtitle=models.TextField()
-    section=models.ForeignKey(Section, on_delete=models.CASCADE)
+    simulationid = models.AutoField(primary_key=True)
+    simulationtype = models.IntegerField()
+    simulationtitle = models.TextField()
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+
 
 class SectionSimulationAnswer(models.Model):
     answerid = models.AutoField(primary_key=True)
-    answertitle=models.TextField()
-    content=models.TextField()
+    answertitle = models.TextField()
+    content = models.TextField()
     sectionsimulation = models.ForeignKey(SectionSimulation, on_delete=models.CASCADE)
 
+
 class SectionQuestion(models.Model):
-    questionid=models.AutoField(primary_key=True)
-    questiontitle=models.TextField()
-    content=models.TextField()
-    section=models.ForeignKey(Section, on_delete=models.CASCADE)
+    questionid = models.AutoField(primary_key=True)
+    questiontitle = models.TextField()
+    content = models.TextField()
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+
 
 class Topic(models.Model):
     topicTuple = (
@@ -68,11 +73,10 @@ class Topic(models.Model):
         (1, "media"),
     )
     topicid = models.AutoField(primary_key=True)
-    topicname=models.CharField(max_length=60,default=None)
+    topicname = models.CharField(max_length=60, default=None)
     content = models.TextField(null=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    topictype=models.IntegerField(choices=topicTuple,default=0)
-    students = models.ManyToManyField(Student, through='Progress')
+    topictype = models.IntegerField(choices=topicTuple, default=0)
 
 
 class Pathlist(models.Model):
@@ -128,12 +132,16 @@ class Notification(models.Model):
 # 学生与知识点之间存在多对多关系
 # progree用于查看学生的学习进程
 class Progress(models.Model):
-    student = models.ForeignKey(Student, related_name='studied_topics', on_delete=models.CASCADE)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    student = models.ForeignKey(Student, related_name='studied_section', on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
     content = models.CharField(null=True, max_length=200)
+    # 存储学习秒数
+    duration = models.IntegerField(default=0)
+    isfinish = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ("student", "topic")
+        unique_together = ("student", "section")
 
 
 # 题库
@@ -148,24 +156,25 @@ class Question(models.Model):
     answer = models.CharField(max_length=200)
 
 
-#考试
+# 考试
 class Test(models.Model):
     testid = models.AutoField(primary_key=True)
     testname = models.CharField(max_length=200)
     testtime = models.IntegerField()
-    state = models.IntegerField() #考试是否开放，0为正在开放，1为考试已结束
+    state = models.IntegerField()  # 考试是否开放，0为正在开放，1为考试已结束
     xznum = models.IntegerField()
     dxnum = models.IntegerField()
     pdnum = models.IntegerField()
     testscore = models.IntegerField()
+
 
 # 学生考试记录
 class TestRecord(models.Model):
     recordid = models.AutoField(primary_key=True)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    datetime = models.CharField(max_length=200,null=True)
-    duration = models.CharField(max_length=200,null=True)
+    datetime = models.CharField(max_length=200, null=True)
+    duration = models.CharField(max_length=200, null=True)
     state = models.IntegerField()
     score = models.IntegerField(null=True)
 
@@ -176,16 +185,15 @@ class QuestionRecord(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    content = models.CharField(max_length=200,null=True)
+    content = models.CharField(max_length=200, null=True)
     istrue = models.IntegerField(null=True)
+
 
 # 学生提交实验
 class Experiment(models.Model):
-    experimentid=models.AutoField(primary_key=True)
-    experimentname=models.CharField(max_length=200)
-    content=models.TextField(null=True)
-    experimentdeadline=models.DateField(default=timezone.now)
-    experimentstatus=models.BooleanField(default=False)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE,default=None)
-
-
+    experimentid = models.AutoField(primary_key=True)
+    experimentname = models.CharField(max_length=200)
+    content = models.TextField(null=True)
+    experimentdeadline = models.DateField(default=timezone.now)
+    experimentstatus = models.BooleanField(default=False)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, default=None)

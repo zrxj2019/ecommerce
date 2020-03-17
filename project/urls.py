@@ -75,7 +75,13 @@ urlpatterns = [
     path('teacher/test/get_test/', views.get_test_teacher),
     path('teacher/test/publish_test/', views.publish_test_teacher),
     path('teacher/test/check_test/', views.check_test_teacher),
-    path('teacher/test/end_test/', views.end_test_teacher)
+    path('teacher/test/end_test/', views.end_test_teacher),
+
+
+    # ***********管理员*******************
+    path('admin/', views.main_admin),
+    path('admin/studentManage/', views.studentManage),
+    path('admin/courseManage/', views.courseManage)
 
 
 ]

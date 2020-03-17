@@ -17,20 +17,29 @@ from .student import studentController
 
 
 #***********************页面跳转相关***********************
+def main_admin(request):
+    validate = loginValidator(request)
+    if validate != None:
+        return validate
+    return render(request, 'admin/adminMain.html', {'username':request.session.get('username')})
+
 def main_teacher(request):
     validate = loginValidator(request)
     if validate != None:
         return validate
     return render(request, 'teacher/teacherMain.html', {'username':request.session.get('username')})
+
+
 def main_student(request):
     validate=loginValidator(request)
     if validate!=None:
         return validate
     student = models.Student.objects.get(studentid=request.session.get('userid'))
     TOTALTOPICS = 28
-    study_progress = len(student.studied_topics.all())
+    study_progress = len(student.studied_section.all())
     return render(request, 'student/studentMain.html', {'username':request.session.get('username'),
                                                         'total':TOTALTOPICS, 'study_progress':study_progress})
+
 def user_info_student(request):
     validate = loginValidator(request)
     if validate != None:
@@ -81,6 +90,11 @@ def loginValidator(request):
                 return redirect('/student/')
             else:
                 return None
+        elif role==2:
+            if 'admin' not in request.get_full_path_info():
+                return redirect('/admin/')
+            else:
+                return None
 
 def login(request):
     if request.session.get('is_login', None):  # 不允许重复登录
@@ -90,6 +104,8 @@ def login(request):
             return redirect('/teacher/')
         elif role == 1:
             return redirect('/student/')
+        elif role == 2:
+            return redirect('/admin/')
     if request.method=="POST":
         login_form=forms.LoginForm(request.POST)
         error="<h6>登录错误！</h6><span>请检查输入</span>"
@@ -123,6 +139,7 @@ def login(request):
                     request.session['userid'] = username
                     request.session['username'] = student.studentname
                     return redirect('/student/')
+                #管理员
             else:
                 error = "<h6>登录错误！</h6><span>密码错误</span>"
                 return render(request, 'login.html', locals())
@@ -206,7 +223,7 @@ def get_new_notification_student(request):
 def study_compare_pay(request):
     #studentid = request.session.get('userid')
 
-    return render(request, 'student/compare_pay.html', {'data': request.session.get('username')})\
+    return render(request, 'student/compare_pay.html', {'data': request.session.get('username')})
 
 @csrf_exempt
 def study_compare_pay1(request):
@@ -490,6 +507,18 @@ def pay_pixi_test(request):
     return render(request,'student/paytech.html',{'username':request.session.get('username')})
 ############################pixi测试##################################
 
+############################管理员##################################
+@csrf_exempt
+def studentManage(request):
+    #studentid = request.session.get('userid')
+
+    return render(request, 'admin/studentManage.html', {'data': request.session.get('username')})
+
+@csrf_exempt
+def courseManage(request):
+    #studentid = request.session.get('userid')
+
+    return render(request, 'admin/courseManage.html', {'data': request.session.get('username')})
 
 
 
