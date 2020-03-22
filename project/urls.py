@@ -19,7 +19,10 @@ Including another URLconf
 from django.urls import path
 # from django.conf.urls import url
 from ecommerceweb import views
+from ecommerceweb.ecommerce_utils import login_util
+from ecommerceweb.ecommerce_utils import captcha_util
 from ecommerceweb.student import studentController
+from ecommerceweb.teacher import teacherController
 from django.contrib import admin
 from django.urls import include
 
@@ -29,10 +32,10 @@ from django.urls import include
 urlpatterns = [
     path('control/', admin.site.urls),  # 管理员访问路径 127.0.0.1:8000/control
     # ***********登录、登出*************
-    path('login/', views.login),
+    path('login/', login_util.login),
     path('captcha/', include('captcha.urls')),
-    path('refresh_captcha/', views.refresh_captcha),
-    path('logout/', views.logout),
+    path('refresh_captcha/', captcha_util.refresh_captcha),
+    path('logout/', login_util.logout),
     # ***********学生*******************
     path('student/', views.main_student),
     path('student/user/', views.user_info_student),
@@ -62,6 +65,7 @@ urlpatterns = [
     # ****在线学习模块****#
     path('student/onlinelearning/', views.student_online_learning),
     path('student/onlinelearning/get_section_details', studentController.getSectionDetails),
+    path('student/onlinelearning/update_study_progress', studentController.updateStudyProgress),
     # ****各运营模式对比****#
     path('student/compare/',views.compare),
     path('student/compare_pattern/',views.compare_pattern),
@@ -75,7 +79,10 @@ urlpatterns = [
     path('teacher/test/get_test/', views.get_test_teacher),
     path('teacher/test/publish_test/', views.publish_test_teacher),
     path('teacher/test/check_test/', views.check_test_teacher),
-    path('teacher/test/end_test/', views.end_test_teacher)
+    path('teacher/test/end_test/', views.end_test_teacher),
 
+    # ****查看学生学习进度****
+    path('teacher/learningprogress/',teacherController.student_progress),
+    path('teacher/learningprogress/get_all_student_progress',teacherController.get_all_student_progress),
 
 ]

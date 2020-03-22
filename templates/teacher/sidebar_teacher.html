@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<div class="sidebar" data-image="{% static "assets/img/sidebar-4.jpg" %}" data-color="azure">
+    <!--
+Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+
+Tip 2: you can also add an image using data-image tag
+-->
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="http://www.bupt.edu.cn" class="simple-text">
+                跨境电子商务教学平台
+            </a>
+        </div>
+        <ul class="nav">
+            <li>
+                <a class="nav-link" href="/teacher">
+                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <p>主页</p>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="/teacher/user/">
+                    <i class="nc-icon nc-circle-09"></i>
+                    <p>个人信息</p>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="/teacher/learningprogress/">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>学生学习进度</p>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="/teacher/test/">
+                    <i class="nc-icon nc-paper-2"></i>
+                    <p>考试</p>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="/teacher/experiment/">
+                    <i class="nc-icon nc-atom"></i>
+                    <p>实验</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
